@@ -27,6 +27,12 @@ Some notes and information about getting the back-end set up to develop the back
 
 #### Setup Instructions
 1. Install .NET Core, I installed this via homebrew. The command is `brew install dotnet`
+2. Clone the vincesvideos repo to a desired path
+3. Go to Visual Studio Code, ensure you can use the terminal (view > terminal)
+4. Navigate to the directory
+5. From the root vincesvideos folder, attempt to build the api `dotnet build api` (or `dotnet build api`) if you're already in the api folder.
+From the root vincesvideos folder, attempt to build the api `dotnet build Api.Tests` (or `dotnet build Api.Tests`) if you're already in the api folder.
+6. From the Api.Tests folder, attempt to run the unit tests `dotnet test Api.Tests` (or `dotnet test`) if you're already in the Api.Tests folder.
 
 Development Environment Configuration
 I've used Visual Studio Code to prevent from the bloat of Visual Studio
