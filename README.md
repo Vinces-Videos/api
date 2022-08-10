@@ -35,6 +35,7 @@ From the root vincesvideos folder, attempt to build the api `dotnet build Api.Te
 6. From the Api.Tests folder, attempt to run the unit tests `dotnet test Api.Tests` (or `dotnet test`) if you're already in the Api.Tests folder.
 7. Run the api project via `dotnet run -project api` or `dotnet run`
 8. Ensure swagger responds on the URL https://localhost:<port>/swagger (the port can be found in your visual studio code terminal)
+9. I have created some demo endpoints to test which will allow you to ensure everything is set up correctly. Try one of the demo urls https://localhost/Demo or https://localhost/Demo/5 (the number is arbitrary at the moment)
 
 Development Environment Configuration
 I've used Visual Studio Code to prevent from the bloat of Visual Studio
