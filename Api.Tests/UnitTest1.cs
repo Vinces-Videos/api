@@ -7,13 +7,12 @@ namespace Api.Tests;
 public class UnitTest1
 {
     [TestMethod]
-    public void TestMethod1()
+    public void CheckVideoExists()
     {
         var video = new Video{
             Id = 4,
             Name = "Oblivion"
         };
-        Console.WriteLine(Name);
         Assert.IsTrue(video.Id == 4);
     }
 }
