@@ -13,7 +13,6 @@ public class UnitTest1
             Id = 4,
             Name = "Oblivion"
         };
-        Console.WriteLine(Name);
         Assert.IsTrue(video.Id == 4);
     }
 }
