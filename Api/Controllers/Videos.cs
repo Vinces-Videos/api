@@ -5,12 +5,12 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Produces("application/json")]
 public class VideosController : ControllerBase
 {
     [HttpGet(Name = "GetVideos")]
     public object Get()
     {
-        string text = System.IO.File.ReadAllText(@"../Test.Data.Files/videos.json");
-        return JsonSerializer.Serialize(text);
+        return JsonSerializer.Deserialize<dynamic>(System.IO.File.ReadAllText(@"../Test.Data.Files/videos.json")) ?? new dynamic[0];
     }
 }
