@@ -213,11 +213,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/Api/Api.csproj",
+      "projectUniqueName": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/api/api/Api.csproj",
       "projectName": "Api",
-      "projectPath": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/Api/Api.csproj",
+      "projectPath": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/api/api/Api.csproj",
       "packagesPath": "/Users/matthew.coffey/.nuget/packages/",
-      "outputPath": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/Api/obj/",
+      "outputPath": "/Users/matthew.coffey/Documents/git-mc/vincesvideos/api/api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/matthew.coffey/.nuget/NuGet/NuGet.Config"
