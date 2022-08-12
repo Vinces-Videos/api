@@ -31,10 +31,9 @@ Some notes and information about getting the back-end set up to develop the back
 3. Go to Visual Studio Code, ensure you can use the terminal (view > terminal)
 4. Navigate to the directory
 5. From the root vincesvideos folder, attempt to build the api `dotnet build api` (or `dotnet build`) if you're already in the api folder.
-From the root vincesvideos folder, attempt to build the api `dotnet build Api.Tests` (or `dotnet build`) if you're already in the api folder.
 6. From the Api.Tests folder, attempt to run the unit tests `dotnet test Api.Tests` (or `dotnet test`) if you're already in the Api.Tests folder.
 7. Run the api project via `dotnet run --project api` or `dotnet run`
-8. Ensure swagger responds on the URL https://localhost:port/swagger (the port can be found in your visual studio code terminal)
+8. Ensure swagger responds on the URL https://localhost:port/swagger (the port can be found in your visual studio code terminal). If you have localhost certificate issues, refer to [this document](https://docs.google.com/document/d/1Tmq-iHIfXu_bkeJ0O5CPDPkoUMKZeDTVcT0o48Vme1s/edit)
 9. I have created some demo endpoints to test which will allow you to ensure everything is set up correctly. Try one of the demo urls https://localhost/Demo or https://localhost/Demo/5 (the number is arbitrary at the moment)
 
 #### Development Environment Configuration
