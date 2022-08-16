@@ -11,8 +11,9 @@ namespace Controllers;
 public class VideosController : ControllerBase
 {
     [HttpGet(Name = "GetVideos")]
-    public object Get()
+    public IActionResult Get()
     {
-        return JsonSerializer.Serialize<List<Product>>(MongoController.GetCollection<Product>("Products"));
+        //Content formats the JSON result correctly.
+        return Content(JsonSerializer.Serialize<List<Product>>(MongoController.GetCollection<Product>("Products")));
     }
 }
