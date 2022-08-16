@@ -13,7 +13,6 @@ public class VideosController : ControllerBase
     [HttpGet(Name = "GetVideos")]
     public object Get()
     {
-        return string.Join(", ", MongoController.GetCollection<Product>("Products").Select(product => product.Title));
-        //return JsonSerializer.Deserialize<dynamic>(System.IO.File.ReadAllText(@"../Test.Data.Files/videos.json")) ?? new dynamic[0];
+        return JsonSerializer.Serialize<List<Product>>(MongoController.GetCollection<Product>("Products"));
     }
 }
