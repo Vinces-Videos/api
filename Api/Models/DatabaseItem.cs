@@ -1,6 +1,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
+namespace Models;
+
 [BsonIgnoreExtraElements]
 //An item which can be stored within the DB
 public class DatabaseItem

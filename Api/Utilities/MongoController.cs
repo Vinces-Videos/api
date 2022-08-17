@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Models;
 
 namespace Utilities;
 
@@ -25,14 +26,12 @@ public class MongoController : IDatabaseController
     public string DatabaseListAsCVS() => string.Join(", ", DbClient.ListDatabaseNames().ToList());
 
     //A collection is equivilant to a table, returns a full unfiltered table
-    public List<DatabaseItem> GetCollection<DatabaseItem>(string collectionName) => Database.GetCollection<DatabaseItem>(collectionName).Find(new BsonDocument()).ToList();
+    public List<T> GetCollection<T>(string collectionName) => Database.GetCollection<T>(collectionName).Find(new BsonDocument()).ToList();
 
     //Get a single record by it's object Id from the 
-    public DatabaseItem GetById<DatabaseItem>(string id, string collectionName)
+    public T GetById<T>(string id, string collectionName) where T : DatabaseItem
     {
-        var collection = Database.GetCollection<DatabaseItem>(collectionName).AsQueryable<DatabaseItem>();
-        var foo = collection.Where<DatabaseItem>(record => record.Id == "id");
-        //var filter = Builders<DatabaseItem>.Filter.Eq("_id", id); //Builders allow adding multiple filters together
-        //return collection.Find(filter).FirstOrDefault();
+        var collection = Database.GetCollection<T>(collectionName).AsQueryable();
+        return collection.FirstOrDefault<T>(record => record.Id == id);
     }
 }
