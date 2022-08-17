@@ -7,8 +7,15 @@ namespace Controllers;
 [Route("[controller]")]
 public class DemoController : ControllerBase
 {
+    private IDatabaseController db;
+
+    public DemoController(IDatabaseController _db)
+    {
+        db = _db;
+    }
+
     [HttpGet(Name = "GetDemo")]
-    public string Get() => MongoController.DatabaseListAsCVS();
+    public string Get() => db.GetType().ToString();
 
     //This demonstrates using path parameters i.e. localhost:<port>/videos/4
     [HttpGet("{id}")]

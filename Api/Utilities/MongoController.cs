@@ -4,13 +4,14 @@ using MongoDB.Bson;
 namespace Utilities;
 
 //Controllers can inherit from DBController to interact with the DB
-public static class MongoController{
+public class MongoController : IDatabaseController
+{
     //The mongo DB client
-    private static MongoClient DbClient { get; }
+    private MongoClient DbClient { get; }
     //The database object
-    private static IMongoDatabase Database { get; }
+    private IMongoDatabase Database { get; }
 
-    static MongoController()
+    public MongoController()
     {
         //The connection string to the MongoDB Server
         var connectionString = ConfigurationManager.AppSetting["MongoDBConnectionString"]; 
@@ -21,11 +22,17 @@ public static class MongoController{
     }
 
     //Returns the list of available databases on the mongo client as a string.
-    public static string DatabaseListAsCVS() => string.Join(", ", DbClient.ListDatabaseNames().ToList());
+    public string DatabaseListAsCVS() => string.Join(", ", DbClient.ListDatabaseNames().ToList());
 
     //A collection is equivilant to a table, returns a full unfiltered table
-    public static List<T> GetCollection<T>(string name)
+    public List<DatabaseItem> GetCollection<DatabaseItem>(string collectionName) => Database.GetCollection<DatabaseItem>(collectionName).Find(new BsonDocument()).ToList();
+
+    //Get a single record by it's object Id from the 
+    public DatabaseItem GetById<DatabaseItem>(string id, string collectionName)
     {
-        return Database.GetCollection<T>(name).Find(new BsonDocument()).ToList();
+        var collection = Database.GetCollection<DatabaseItem>(collectionName).AsQueryable<DatabaseItem>();
+        var foo = collection.Where<DatabaseItem>(record => record.Id == "id");
+        //var filter = Builders<DatabaseItem>.Filter.Eq("_id", id); //Builders allow adding multiple filters together
+        //return collection.Find(filter).FirstOrDefault();
     }
 }

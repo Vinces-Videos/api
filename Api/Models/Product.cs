@@ -3,13 +3,14 @@ using MongoDB.Bson;
 
 namespace Models;
 
-[BsonIgnoreExtraElements]
-public class Product
+public class Product : DatabaseItem
 {
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
     [BsonElement("title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
+
     [BsonElement("type")]
-    public string Type { get; set; }
+    public string? Type { get; set; }
+
+    [BsonElement("ageRating")]
+    public string? AgeRating { get; set; }
 }
