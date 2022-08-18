@@ -1,10 +1,10 @@
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
 using Database;
 
 namespace Models;
 
 [DbCollectionName("Products")]
+[BsonIgnoreExtraElements]
 public class Product : DatabaseItem
 {
     [BsonElement("title")]
@@ -13,6 +13,6 @@ public class Product : DatabaseItem
     [BsonElement("type")]
     public string? Type { get; set; }
 
-    [BsonElement("ageRating")]
-    public string? AgeRating { get; set; }
+    [BsonElement("stockCount")]
+    public int StockCount { get; set; }
 }

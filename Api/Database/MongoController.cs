@@ -23,13 +23,16 @@ public class MongoController : IDatabaseController
         _database = _dbClient.GetDatabase(dbName);
     }
 
+    //Checks whether an ID can be parsed by MongoDB or not
+    public bool IsValidId(string id) => ObjectId.TryParse(id, out ObjectId objectId);
+
     //Returns the list of available databases on the mongo client as a string.
     public string DatabaseListAsCVS() => string.Join(", ", _dbClient.ListDatabaseNames().ToList());
 
-    //A collection is equivilant to a table, returns a full unfiltered table
-    public List<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(new BsonDocument()).ToList();
+    //A collection is equivilant to a table, returns a full unfiltered table.
+    public List<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(_ => true).ToList();
 
-    //Get a single record by it's object Id from the 
+    //Get a single record by it's object Id from the database.
     public T GetById<T>(string id) where T : DatabaseItem
     {
         var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
@@ -41,5 +44,12 @@ public class MongoController : IDatabaseController
         return result;
     }
 
-    public bool IsValidId(string id) => ObjectId.TryParse(id, out ObjectId objectId);
+    ///Returns the record id.
+    public string Insert<T>(T record) where T : DatabaseItem
+    {
+        //In this instance we get as a BsonDocument so we're able to insert as a BsonDocument too.
+        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
+        collection.InsertOne(record);
+        return record.Id;
+    }
 }

@@ -24,7 +24,7 @@ public class ProductsController : ControllerBase
         return db.GetCollection<Product>();
     }
 
-    //Gets a product by it's Id from the database and returns it, or a bad request if the id was not valid
+    //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
@@ -38,7 +38,12 @@ public class ProductsController : ControllerBase
         catch(KeyNotFoundException)
         {
             return NotFound();
-        }
-        
+        }        
+    }
+
+    [HttpPost(Name = "CreateProduct")]
+    public IActionResult Post(Product product)
+    {
+        return Content($"Within a post {product.Title}");
     }
 }
