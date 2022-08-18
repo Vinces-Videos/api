@@ -1,8 +1,10 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using Utilities;
 
 namespace Models;
 
+[DbCollectionName("Products")]
 public class Product : DatabaseItem
 {
     [BsonElement("title")]
