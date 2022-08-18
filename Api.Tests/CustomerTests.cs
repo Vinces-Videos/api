@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Api.Models;
+using Api;
 
 namespace Api.Tests;
 
@@ -9,6 +9,6 @@ public class CustomerTests
     [TestMethod]
     public void IsCreateSuccessful()
     {
-
+        
     }
 }

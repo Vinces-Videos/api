@@ -1,18 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Api.Models;
+using Api;
 
 namespace Api.Tests;
 
 [TestClass]
-public class VideoTests
+public class ProductTests
 {
-    private Video GenerateVideo() => new Video(title);
+    //private Product GenerateVideo() => new Product(title);
 
     [TestMethod]
     //Ensures the video is tagged with a valid category
     public void HasCategoryTag()
     {
-        list tags = GenerateVideo().getTags();
+
     }
 
     [TestMethod]
