@@ -1,3 +1,5 @@
+namespace Database;
+
 //Allows us to bind a class to a collection name in the DB
 public class DbCollectionName : Attribute
 {

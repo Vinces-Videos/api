@@ -1,5 +1,7 @@
 using Models;
 
+namespace Database;
+
 public interface IDatabaseController
 {
     //Get a full rowset from a collection

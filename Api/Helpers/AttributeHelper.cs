@@ -1,3 +1,5 @@
+using Database;
+
 namespace Helpers;
 
 public static class AttributeHelper
@@ -10,6 +12,6 @@ public static class AttributeHelper
                 return a.GetName;
         }
 
-        throw new KeyNotFoundException($"The type {classType.Name} does not have the DbCollectionName attribute");
+        throw new Exception($"The type {classType.Name} does not have the DbCollectionName attribute");
     }
 }

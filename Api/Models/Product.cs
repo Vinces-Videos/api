@@ -1,6 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using Utilities;
+using Database;
 
 namespace Models;
 
