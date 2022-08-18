@@ -1,6 +1,6 @@
-namespace Api.Models;
+namespace Models;
 
-public class Customer
+public class Customer : DatabaseItem
 {
 
 }
