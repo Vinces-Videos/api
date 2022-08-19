@@ -18,11 +18,7 @@ public class ConfectionaryController : ControllerBase
     }
 
     [HttpGet(Name = "GetConfectionary")]
-    public List<Confectionary> Get()
-    {
-        //Content formats the JSON result correctly.
-        return db.GetCollectionByType<Confectionary>();
-    }
+    public List<Confectionary> Get() => db.GetCollectionByType<Confectionary>();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
