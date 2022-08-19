@@ -1,7 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 namespace Models;
 
-[BsonIgnoreExtraElements]
 public class Video : Product
 {
     [BsonElement("durationMinutes")]

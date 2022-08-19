@@ -11,8 +11,11 @@ public class Product : DatabaseItem
     public string? Title { get; set; }
 
     [BsonElement("type")]
-    public string? Type { get; set; }
+    internal string? Type { get; set; }
 
     [BsonElement("stockCount")]
     public int StockCount { get; set; }
+
+    [BsonElement("tags")]
+    public Dictionary<string, string>? Tags { get; set ; }
 }

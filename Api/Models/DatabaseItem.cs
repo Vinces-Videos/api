@@ -8,9 +8,10 @@ namespace Models;
 public class DatabaseItem
 {
     //The object ID within the database, this must be settable for constructing the object from the DB.
+    //Internal objects are ignored by swagger
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonId]
-    public string Id { get; set; }
+    internal string Id { get; set; }
 
     //Whether or not the record is archived.
     [BsonElement("archived")]
