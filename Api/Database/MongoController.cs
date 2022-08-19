@@ -32,12 +32,20 @@ public class MongoController : IDatabaseController
     //A collection is equivilant to a table, returns a full unfiltered table.
     public List<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(_ => true).ToList();
 
+    //A collection is equivilant to a table, returns a full unfiltered table.
+    public List<T> GetCollectionByType<T>()
+    {
+        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
+        var filter = Builders<T>.Filter.Eq("type", typeof(T).Name);
+        return collection.Find(filter).ToList();
+    }
+
     //Get a single record by it's object Id from the database.
     public T GetById<T>(string id) where T : DatabaseItem
     {
         var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
         
-        var result = collection.FirstOrDefault<T>(record => record.Id == id);
+        var result = collection.FirstOrDefault<T>(x => x.Id == id);
         if (result == null)
             throw new KeyNotFoundException();
 
@@ -51,5 +59,18 @@ public class MongoController : IDatabaseController
         var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
         collection.InsertOne(record);
         return record.Id;
+    }   
+
+    //Records should be archived in most cases instead of deleted
+    public bool DeleteById<T>(string id) where T: DatabaseItem
+    {
+        //Do we need to do some cleanup on other objects that might reference this? The nature of NoSQL helps with this as they're not Id references
+        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
+        return collection.DeleteOne(x => x.Id == id).DeletedCount > 0;
+    }
+
+    public string Update<T>(T record) where T: DatabaseItem
+    {
+        throw new NotImplementedException();
     }
 }

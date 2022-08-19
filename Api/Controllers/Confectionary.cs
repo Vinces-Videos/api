@@ -21,7 +21,7 @@ public class ConfectionaryController : ControllerBase
     public List<Confectionary> Get()
     {
         //Content formats the JSON result correctly.
-        return db.GetCollection<Confectionary>();
+        return db.GetCollectionByType<Confectionary>();
     }
 
     //Gets a database item by its Id and returns the result
@@ -57,5 +57,21 @@ public class ConfectionaryController : ControllerBase
     {
         db.Insert<Confectionary>(confec);
         return Content($"Within a post {confec.Calories} seconds and {confec.Title} and id is {confec.Id}");
+    }
+
+    [HttpDelete(Name = "DeleteConfectionary")]
+    public IActionResult Delete(string id)
+    {
+        if(!db.IsValidId(id))
+            return BadRequest();
+
+        try 
+        {
+            return Ok(db.DeleteById<Confectionary>(id));
+        }
+        catch(KeyNotFoundException)
+        {
+            return NotFound();
+        }   
     }
 }
