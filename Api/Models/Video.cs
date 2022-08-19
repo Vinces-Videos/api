@@ -9,6 +9,9 @@ public class Video : Product
     [BsonElement("ageRating")]
     public string? AgeRating { get; set; }
 
+    [BsonElement("category")]
+    public string Category { get; set; }
+
     public Video()
     {
         Type = "Video";

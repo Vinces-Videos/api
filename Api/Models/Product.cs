@@ -5,13 +5,10 @@ namespace Models;
 
 [DbCollectionName("Products")]
 [BsonIgnoreExtraElements]
-public class Product : DatabaseItem
+public class Product : DatabaseItem, IDatabaseNameable
 {
     [BsonElement("title")]
-    public string? Title { get; set; }
-
-    [BsonElement("type")]
-    internal string? Type { get; set; }
+    public string Name { get; set; }
 
     [BsonElement("stockCount")]
     public int StockCount { get; set; }
