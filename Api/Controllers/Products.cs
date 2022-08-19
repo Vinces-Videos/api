@@ -40,10 +40,4 @@ public class ProductsController : ControllerBase
             return NotFound();
         }        
     }
-
-    [HttpPost(Name = "CreateProduct")]
-    public IActionResult Post(Product product)
-    {
-        return Content($"Within a post {product.Title}");
-    }
 }
