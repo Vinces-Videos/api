@@ -1,7 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 namespace Models;
 
-[BsonIgnoreExtraElements]
 public class Video : Product
 {
     [BsonElement("durationMinutes")]
@@ -9,6 +8,9 @@ public class Video : Product
 
     [BsonElement("ageRating")]
     public string? AgeRating { get; set; }
+
+    [BsonElement("category")]
+    public string Category { get; set; }
 
     public Video()
     {

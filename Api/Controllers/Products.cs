@@ -18,11 +18,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet(Name = "GetProducts")]
-    public List<Product> Get()
-    {
-        //Content formats the JSON result correctly.
-        return db.GetCollection<Product>();
-    }
+    public List<Product> Get() => db.GetCollection<Product>();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
