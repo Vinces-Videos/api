@@ -67,7 +67,7 @@ jobs:
 
     - name: Check for files
       id: chk-files
-      run: echo $(ls)
+      run: echo $(ls Api/)
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
