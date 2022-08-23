@@ -12,6 +12,9 @@ public class DatabaseItem
     [BsonId]
     public string Id { get; set; }
 
+    [BsonElement("type")]
+    internal string? Type { get; set; }
+
     //Whether or not the record is archived.
     [BsonElement("archived")]
     public bool Archived { get; set; } = false;
