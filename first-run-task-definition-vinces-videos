@@ -69,7 +69,7 @@
       "EC2",
       "FARGATE"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/first-run-task-definition-vinces-videos:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/first-run-task-definition-vinces-videos",
     "family": "first-run-task-definition-vinces-videos",
     "requiresAttributes": [
       {
