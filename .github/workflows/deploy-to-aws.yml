@@ -10,8 +10,8 @@ on:
 env:
   AWS_REGION: eu-west-2
   ECR_REPOSITORY: vinces-videos-api
-  ECS_SERVICE: vinces-videos-cluster-ec2
-  ECS_CLUSTER: vinces-videos-cluster-default
+  ECS_SERVICE: vinces-videos-cluster-ec2-service
+  ECS_CLUSTER: vinces-videos-cluster-ec2
   ECS_TASK_DEFINITION: first-run-task-definition-vinces-videos.json
   CONTAINER_NAME: vinces-videos-api-container
 
