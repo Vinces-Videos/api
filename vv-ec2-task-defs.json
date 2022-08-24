@@ -82,7 +82,7 @@
   "requiresCompatibilities": [
     "EC2"
   ],
-  "networkMode": "bridge",
+  "networkMode": null,
   "runtimePlatform": null,
   "cpu": null,
   "revision": 10,
