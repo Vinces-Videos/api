@@ -29,7 +29,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api",
+      "image": "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api:a93298697077bad61d3b8a7c038d4221820c027b",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -56,7 +56,7 @@
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/vv-ec2-task-defs:6",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/vv-ec2-task-defs:10",
   "family": "vv-ec2-task-defs",
   "requiresAttributes": [
     {
@@ -82,10 +82,10 @@
   "requiresCompatibilities": [
     "EC2"
   ],
-  "networkMode": null,
+  "networkMode": "bridge",
   "runtimePlatform": null,
   "cpu": null,
-  "revision": 6,
+  "revision": 10,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
