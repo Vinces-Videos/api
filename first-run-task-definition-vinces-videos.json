@@ -66,8 +66,7 @@
     "memory": "512",
     "taskRoleArn": null,
     "compatibilities": [
-      "EC2",
-      "FARGATE"
+      "EC2"
     ],
     "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/first-run-task-definition-vinces-videos",
     "family": "first-run-task-definition-vinces-videos",
