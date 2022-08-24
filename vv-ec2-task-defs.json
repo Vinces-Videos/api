@@ -29,7 +29,7 @@
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api:a93298697077bad61d3b8a7c038d4221820c027b",
+      "image": "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
