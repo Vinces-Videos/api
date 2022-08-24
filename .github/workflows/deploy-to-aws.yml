@@ -12,7 +12,7 @@ env:
   ECR_REPOSITORY: vinces-videos-api
   ECS_SERVICE: vinces-videos-container-service
   ECS_CLUSTER: vinces-videos-cluster
-  ECS_TASK_DEFINITION: vinces-videos-ec2-task-definition.json
+  ECS_TASK_DEFINITION: vv-ec2-task-defs.json
   CONTAINER_NAME: vinces-videos-container
 
 permissions:
