@@ -19,7 +19,7 @@
       "workingDirectory": null,
       "secrets": null,
       "dockerSecurityOptions": null,
-      "memory": null,
+      "memory": 300,
       "memoryReservation": null,
       "volumesFrom": [],
       "stopTimeout": null,
@@ -44,14 +44,14 @@
     }
   ],
   "placementConstraints": [],
-  "memory": "100",
+  "memory": null,
   "taskRoleArn": "arn:aws:iam::668375330582:role/ecsTaskExecutionRole",
   "compatibilities": [
     "EXTERNAL",
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/vinces-videos-ec2-task-definition:1",
-  "family": "vinces-videos-ec2-task-definition",
+  "taskDefinitionArn": "arn:aws:ecs:eu-west-2:668375330582:task-definition/vv-ec2-task-defs:1",
+  "family": "vv-ec2-task-defs",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -78,7 +78,7 @@
   ],
   "networkMode": null,
   "runtimePlatform": null,
-  "cpu": "1024",
+  "cpu": null,
   "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
