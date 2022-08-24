@@ -1,3 +1,6 @@
+You should check the run book for further information about the project, how to deploy as well as other information.
+https://github.com/Vinces-Videos/resources.git
+
 ## Development Environment
 Some useful tips for setting up your development environment
 
