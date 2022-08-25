@@ -5,11 +5,7 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REPOSITORY: vinces-videos-api
-  ECS_SERVICE: vinces-videos-container-service
-  ECS_CLUSTER: vinces-videos-cluster
-  ECS_TASK_DEFINITION: vv-ec2-task-defs.json
-  CONTAINER_NAME: vinces-videos-container
+  ECR_REPOSITORY: vinces-videos-api-terraform
 
 permissions:
   contents: read
