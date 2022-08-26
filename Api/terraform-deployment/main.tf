@@ -96,8 +96,10 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
       "memoryReservation" : null,
       "volumesFrom" : [],
       "stopTimeout" : null,
+      #scratch is a publically hosted docker image. This gets us around the requirement for an image
+      "image" : "scratch",
       #"image": "${aws_ecr_repository.create-ecr.arn}",
-      "image" : "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api-terraform:4b24795e9cebabc512e45332fa5c3972b0db2a0c"
+      #"image" : "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api-terraform:4b24795e9cebabc512e45332fa5c3972b0db2a0c"
       "startTimeout" : null,
       "firelensConfiguration" : null,
       "dependsOn" : null,
