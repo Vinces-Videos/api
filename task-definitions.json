@@ -1,6 +1,7 @@
 {
 "containerDefinitions": [
   {
+    "family" : "vinces-videos-task-definitions-terraform",
     "dnsSearchDomains" : null,
     "environmentFiles" : null,
     "logConfiguration" : null,
