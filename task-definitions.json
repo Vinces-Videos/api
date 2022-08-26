@@ -1,4 +1,4 @@
-{
+[{
   "family" : "vinces-videos-task-definitions-terraform",
   "containerDefinitions": [
     {
@@ -53,4 +53,4 @@
       "name" : "vinces-videos-container-terraform"
     }
     ]
-}
+}]
