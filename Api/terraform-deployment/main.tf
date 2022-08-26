@@ -12,10 +12,39 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-variable "iamExecutionRole" {
-  type    = string
-  default = "arn:aws:iam::668375330582:role/ecsInstanceRole"
+#start section
+#for ecs hook up to the ec2 instances
+data "aws_iam_policy_document" "ecs_agent" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com", "ecs-tasks.amazonaws.com"]
+    }
+  }
 }
+
+resource "aws_iam_role" "ecs_agent" {
+  name               = "ecs-agent"
+  assume_role_policy = data.aws_iam_policy_document.ecs_agent.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_agent" {
+  role       = aws_iam_role.ecs_agent.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_agent_2" {
+  role       = aws_iam_role.ecs_agent.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_iam_instance_profile" "ecs_agent" {
+  name = "ecs-agent"
+  role = aws_iam_role.ecs_agent.name
+}
+#end section
 
 #Create an elastic container registry to store the deployment files that github will create
 resource "aws_ecr_repository" "create-ecr" {
@@ -32,8 +61,8 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
   family = "vinces-videos-task-definitions-terraform"
   #This could also be loaded from a file but we depend on the ecr repository arn specified in a previous step
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = var.iamExecutionRole
-  task_role_arn            = var.iamExecutionRole
+  execution_role_arn       = aws_iam_role.ecs_agent.arn
+  task_role_arn            = aws_iam_role.ecs_agent.arn
   container_definitions = jsonencode([
     {
       "dnsSearchDomains" : null,
@@ -90,17 +119,23 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
   )
 }
 
-
+#Create launch configuration for the EC2 instances we will be using as a template
 resource "aws_launch_configuration" "create-launch-config" {
   name_prefix   = "vinces-videos-terraform-"
   image_id      = "ami-070d0f1b66ccfd0fa"
   instance_type = "t2.micro"
   key_name = "vincesvideo-api-keypair"
   security_groups = [ "sg-08a208eb04992a77c" ]
+  iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
+  user_data = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.create-ecs-cluster.name} >> /etc/ecs/ecs.config"
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
+#Create an autoscaling group, heavily restrict at the moment
 resource "aws_autoscaling_group" "create-asg" {
-  name                 = "vinces-videos-asg-terraform-"
+  name                 = "vinces-videos-asg-terraform"
   launch_configuration = aws_launch_configuration.create-launch-config.name
   availability_zones = [ "eu-west-2b" ]
   max_size = 1
