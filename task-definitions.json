@@ -1,4 +1,6 @@
-[{
+{
+"containerDefinitions": [
+  {
     "dnsSearchDomains" : null,
     "environmentFiles" : null,
     "logConfiguration" : null,
@@ -48,4 +50,6 @@
     "systemControls" : null,
     "privileged" : null,
     "name" : "vinces-videos-container-terraform"
-}]
+  }
+  ]
+}
