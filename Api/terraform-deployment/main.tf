@@ -63,62 +63,7 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = aws_iam_role.ecs_agent.arn
   task_role_arn            = aws_iam_role.ecs_agent.arn
-  container_definitions = jsonencode([
-    {
-      "dnsSearchDomains" : null,
-      "environmentFiles" : null,
-      "logConfiguration" : null,
-      "entryPoint" : null,
-      "portMappings" : [
-        {
-          "hostPort" : 80,
-          "protocol" : "tcp",
-          "containerPort" : 5000
-        }
-      ],
-      "command" : null,
-      "linuxParameters" : null,
-      "cpu" : 0,
-      "environment" : [
-        {
-          "name" : "ASPNETCORE_URLS",
-          "value" : "http://*:5000"
-        }
-      ],
-      "resourceRequirements" : null,
-      "ulimits" : null,
-      "dnsServers" : null,
-      "mountPoints" : [],
-      "workingDirectory" : null,
-      "secrets" : null,
-      "dockerSecurityOptions" : null,
-      "memory" : 300,
-      "memoryReservation" : null,
-      "volumesFrom" : [],
-      "stopTimeout" : null,
-      #scratch is a publically hosted docker image. This gets us around the requirement for an image
-      "image" : "scratch",
-      #"image": "${aws_ecr_repository.create-ecr.arn}",
-      #"image" : "668375330582.dkr.ecr.eu-west-2.amazonaws.com/vinces-videos-api-terraform:4b24795e9cebabc512e45332fa5c3972b0db2a0c"
-      "startTimeout" : null,
-      "firelensConfiguration" : null,
-      "dependsOn" : null,
-      "disableNetworking" : null,
-      "interactive" : null,
-      "healthCheck" : null,
-      "essential" : true,
-      "links" : null,
-      "hostname" : null,
-      "extraHosts" : null,
-      "pseudoTerminal" : null,
-      "user" : null,
-      "readonlyRootFilesystem" : null,
-      "dockerLabels" : null,
-      "systemControls" : null,
-      "privileged" : null,
-      "name" : "vinces-videos-container-terraform"
-    }]
-  )
+  container_definitions = file("../../task-definitions.json")
 }
 
 #Create launch configuration for the EC2 instances we will be using as a template

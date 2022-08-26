@@ -8,7 +8,7 @@ env:
   ECR_REPOSITORY: vinces-videos-api-terraform
   ECS_SERVICE: vinces-videos-service-terraform
   ECS_CLUSTER: vinces-videos-cluster-terraform
-  ECS_TASK_DEFINITION: vinces-videos-task-definitions-terraform
+  ECS_TASK_DEFINITION: task-definitions.json
   CONTAINER_NAME: vinces-videos-container-terraform
 
 permissions:
