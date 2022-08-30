@@ -8,11 +8,15 @@ terraform {
 }
 
 variable "aws_access_id" {
+  #When not passed in, this is indicative of running from someones computer where it's assumed they have the correct environment variables setup for AWS
+  default = null
   description = "Passed in from Github secrets when the workflow is ran"
   type = string
 }
 
 variable "aws_access_key" {
+  #When not passed in, this is indicative of running from someones computer where it's assumed they have the correct environment variables setup for AWS
+  default = null
   description = "Passed in from Github secrets when the workflow is ran"
   type = string
 }
