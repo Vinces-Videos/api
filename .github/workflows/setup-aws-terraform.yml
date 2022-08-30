@@ -11,14 +11,11 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: test
-    defaults:
-    run:
-      working-directory: './Api/terraform-deployment'
-
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
+        working-directory: './Api/terraform-deployment'
 
     steps:
     # Checkout the repository to the GitHub Actions runner
