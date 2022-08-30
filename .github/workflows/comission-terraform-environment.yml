@@ -1,4 +1,4 @@
-name: Commission AWS Environment
+name: Setup AWS
 
 on:
   workflow_dispatch:
@@ -8,10 +8,10 @@ permissions:
 
 jobs:
   terraform:
-    name: 'Terraform'
+    name: Setup via Terraform
     runs-on: ubuntu-latest
     environment: test
+
     steps:
-      # Checkout the repository to the GitHub Actions runner
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
