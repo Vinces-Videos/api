@@ -11,7 +11,24 @@ jobs:
     name : Create AWS Environment
     runs-on: ubuntu-latest
     environment: test
-  steps:
-    name: TEST
-    run: |
-      echo "Test message"
+    defaults:
+      run:
+      working-directory: "../Api/terraform-deployment"
+    steps : 
+      - uses : actions/checkout@v2
+      - uses : hashicorp/setup-terraform@v2
+
+      - name : Terraform FMT
+        id : fmt
+        run : |
+        terraform fmt -check
+
+      - name : Terraform Init
+        id : init
+        run : |
+        terraform init
+
+      - name : Terraform Validate
+        id : validate
+        run : |
+        terraform validate
