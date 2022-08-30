@@ -10,9 +10,7 @@ terraform {
     bucket = "vinces-videos-statefile"
     key = "global/s3/terraform.tfstate"
     region = "eu-west-2"
-    # Backend configuration also needs to authenticate
-    access_key = var.access_key
-    secret_key = var.secret_key
+    #Variables are not allowed here otherwise I'd have specified the access key here
   }
 }
 
