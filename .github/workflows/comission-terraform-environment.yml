@@ -1,7 +1,7 @@
 name: Commission AWS Environment
 
 on : 
-  workflow_despatch :
+  workflow_dispatch :
 
 defaults :
   run :
