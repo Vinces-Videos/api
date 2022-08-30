@@ -1,6 +1,4 @@
-[{
-  "family" : "vinces-videos-task-definitions-terraform",
-  "containerDefinitions": [
+[
     {
       "dnsSearchDomains" : null,
       "environmentFiles" : null,
@@ -52,5 +50,4 @@
       "privileged" : null,
       "name" : "vinces-videos-container-terraform"
     }
-    ]
-}]
+  ]
