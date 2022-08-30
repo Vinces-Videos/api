@@ -6,10 +6,6 @@ on:
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: "../Api/terraform-deployment"
-
 jobs:
   terraform:
     name: 'Terraform'
