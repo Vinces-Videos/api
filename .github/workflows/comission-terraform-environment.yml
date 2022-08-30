@@ -8,10 +8,10 @@ permissions:
 
 defaults:
   run:
-    working-directory: "../Api/terraform-deployment"
+    working-directory: "../Api/terraform-deployment22"
 
 jobs: 
-  deploy:
+  terraform:
     name: Create AWS Environment
     runs-on: ubuntu-latest
     environment: test
