@@ -6,14 +6,15 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    working-directory: "../Api/terraform-deployment"
+
 jobs: 
   terraform:
     name: Create AWS Environment
     runs-on: ubuntu-latest
     environment: test
-    defaults:
-      run:
-      working-directory: "../Api/terraform-deployment"
     steps: 
       - uses:  actions/checkout@v2
       - uses: hashicorp/setup-terraform@v2
@@ -21,6 +22,7 @@ jobs:
       - name: Terraform FMT
         id: fmt
         run: terraform fmt
+        continue-on-error: true
 
       - name: Terraform Init
         id: init
