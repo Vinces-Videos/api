@@ -5,11 +5,10 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REPOSITORY: vinces-videos-api
-  ECS_SERVICE: vinces-videos-container-service
-  ECS_CLUSTER: vinces-videos-cluster
-  ECS_TASK_DEFINITION: vv-ec2-task-defs.json
-  CONTAINER_NAME: vinces-videos-container
+  ECR_REPOSITORY: vinces-videos-api-terraform
+  ECS_SERVICE: vinces-videos-service-terraform
+  ECS_CLUSTER: vinces-videos-cluster-terraform
+  CONTAINER_NAME: vinces-videos-container-terraform
 
 permissions:
   contents: read
@@ -49,11 +48,16 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+    - name: Download Terraform task definition
+      run: |
+          aws ecs describe-task-definition --task-definition "vinces-videos-task-definitions-terraform" \
+          --query taskDefinition > aws-task-definitions.json
+
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        task-definition: aws-task-definitions.json
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
 
