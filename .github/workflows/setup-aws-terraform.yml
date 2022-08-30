@@ -36,8 +36,8 @@ jobs:
     - name: Terraform Init
       run: |
         terraform init
-        echo pwd
-        echo ls
+        echo $(pwd)
+        echo $(ls)
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
