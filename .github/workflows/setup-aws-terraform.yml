@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
 
-default:
+defaults:
   run:
     working_directory: './Api/terraform-deployment'
 
