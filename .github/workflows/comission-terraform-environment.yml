@@ -1,10 +1,10 @@
 name: Commission AWS Environment
 
-on : 
-  workflow_dispatch :
+on:
+  workflow_dispatch:
 
-defaults :
-  run :
+defaults:
+  run:
     working-directory: "../Api/terraform-deployment"
 
 jobs: 
