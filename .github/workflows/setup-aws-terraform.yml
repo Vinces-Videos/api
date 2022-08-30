@@ -35,6 +35,10 @@ jobs:
         terraform init
         echo $(pwd)
 
+    # Destroy existing environment to ensure clean slate
+    - name: Terraform Destroy previous environment
+      run: terraform destroy -auto-approve -input=false
+
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
