@@ -13,13 +13,13 @@ provider "aws" {
 }
 
 module "setup-iam" {
-    source = "./modules/iam"
-    iam-name = "ecs-agent-vinces-videos"
+  source   = "./modules/iam"
+  iam-name = "ecs-agent-vinces-videos"
 }
 
 #Create an elastic container registry to store the deployment files that github will create
 resource "aws_ecr_repository" "create-ecr" {
-  name = "vinces-videos-api-terraform"
+  name         = "vinces-videos-api-terraform"
   force_delete = true
 }
 
@@ -35,18 +35,18 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
   requires_compatibilities = ["EC2"]
   execution_role_arn       = module.setup-iam.iam-agent-arn
   task_role_arn            = module.setup-iam.iam-agent-arn
-  container_definitions = file("../../task-definitions.json")
+  container_definitions    = file("../../task-definitions.json")
 }
 
 #Create launch configuration for the EC2 instances we will be using as a template
 resource "aws_launch_configuration" "create-launch-config" {
-  name_prefix   = "vinces-videos-terraform-"
-  image_id      = "ami-070d0f1b66ccfd0fa"
-  instance_type = "t2.micro"
-  key_name = "vincesvideo-api-keypair"
-  security_groups = [ "sg-08a208eb04992a77c" ]
+  name_prefix          = "vinces-videos-terraform-"
+  image_id             = "ami-070d0f1b66ccfd0fa"
+  instance_type        = "t2.micro"
+  key_name             = "vincesvideo-api-keypair"
+  security_groups      = ["sg-08a208eb04992a77c"]
   iam_instance_profile = module.setup-iam.iam-instance-profile-arn
-  user_data = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.create-ecs-cluster.name} >> /etc/ecs/ecs.config"
+  user_data            = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.create-ecs-cluster.name} >> /etc/ecs/ecs.config"
   lifecycle {
     create_before_destroy = true
   }
@@ -56,10 +56,10 @@ resource "aws_launch_configuration" "create-launch-config" {
 resource "aws_autoscaling_group" "create-asg" {
   name                 = "vinces-videos-asg-terraform"
   launch_configuration = aws_launch_configuration.create-launch-config.name
-  availability_zones = [ "eu-west-2b" ]
-  max_size = 1
-  min_size = 1
-  desired_capacity = 1
+  availability_zones   = ["eu-west-2b"]
+  max_size             = 1
+  min_size             = 1
+  desired_capacity     = 1
 }
 
 resource "aws_ecs_service" "create-ecs-service" {
