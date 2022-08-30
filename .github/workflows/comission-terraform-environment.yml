@@ -11,7 +11,6 @@ defaults:
     working-directory: "../Api/terraform-deployment"
 
 jobs: 
-  terraform:
     name: Create AWS Environment
     runs-on: ubuntu-latest
     environment: test
