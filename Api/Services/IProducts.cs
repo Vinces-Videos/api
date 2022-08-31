@@ -1,6 +1,6 @@
 using Models;
 
-namespace Repositories;
+namespace Services;
 
 public interface IProducts
 {

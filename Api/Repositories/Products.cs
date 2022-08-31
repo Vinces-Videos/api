@@ -64,7 +64,7 @@ public class Products : IProducts
     }
 
 
-    public void Update(Product product)
+    public Product Put(Product product)
     {
         _productCollection.InsertOne(product);
         _cache.Set(product.Id, new MemoryCacheEntryOptions
@@ -72,10 +72,17 @@ public class Products : IProducts
             Size = 1,
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
         });
+        
+        return product;
     }
 
     public List<Product> GetProducts()
     {
         return _queryableProducts.ToList();
+    }
+
+    public void Delete(string id)
+    {
+        _productCollection.DeleteOne(id);
     }
 }
