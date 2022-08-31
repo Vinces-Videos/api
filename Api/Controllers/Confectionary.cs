@@ -18,11 +18,7 @@ public class ConfectionaryController : ControllerBase
     }
 
     [HttpGet(Name = "GetConfectionary")]
-    public List<Confectionary> Get()
-    {
-        //Content formats the JSON result correctly.
-        return db.GetCollectionByType<Confectionary>();
-    }
+    public List<Confectionary> Get() => db.GetCollectionByType<Confectionary>();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
@@ -41,23 +37,8 @@ public class ConfectionaryController : ControllerBase
         }        
     }
 
-/*
-//FOR VIDEO
-    [HttpPost(Name = "CreateVideo")]
-    public IActionResult Post(Video video)
-    {
-        db.Insert<Product>(video);
-        return Content($"Within a post {video.DurationMinutes} seconds and {video.Title} and id is {video.Id}");
-    }
-*/
-
-//FOR CONFECTIONARY
     [HttpPost(Name = "CreateConfectionary")]
-    public IActionResult Post(Confectionary confec)
-    {
-        db.Insert<Confectionary>(confec);
-        return Content($"Within a post {confec.Calories} seconds and {confec.Title} and id is {confec.Id}");
-    }
+    public IActionResult Post(Confectionary input) => Content($"A new record has been inserted with an Id of {db.Insert<Confectionary>(input)}");
 
     [HttpDelete(Name = "DeleteConfectionary")]
     public IActionResult Delete(string id)

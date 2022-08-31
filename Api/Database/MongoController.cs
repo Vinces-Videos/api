@@ -63,6 +63,18 @@ public class MongoController : IDatabaseController
         return result;
     }
 
+    //Get a single record by it's object Id from the database.
+    public List<T> GetByName<T>(string name) where T : IDatabaseNameable
+    {
+        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
+        
+        var result = collection.Where<T>(x => x.Name == name).ToList();
+        if (result == null)
+            throw new KeyNotFoundException();
+
+        return result;
+    }
+
     ///Returns the record id.
     public string Insert<T>(T record) where T : DatabaseItem
     {

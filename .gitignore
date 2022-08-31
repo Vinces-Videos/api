@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+terraform.tfstate.backup
+terraform-provider-aws_v4.27.0_x5
+terraform-provider-aws_v4.28.0_x5

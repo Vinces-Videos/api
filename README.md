@@ -1,3 +1,6 @@
+You should check the run book for further information about the project, how to deploy as well as other information.
+https://github.com/Vinces-Videos/resources.git
+
 ## Development Environment
 Some useful tips for setting up your development environment
 
@@ -40,3 +43,20 @@ Some notes and information about getting the back-end set up to develop the back
 * I've used Visual Studio Code to prevent from the bloat of Visual Studio
 * A plugin named C# by Microsoft was added to Visual Studio Code to aid with intellisense and debugging
 * You will very likely need a localhost dev certificate which is trusted to debug the webapi
+
+### Deployment Instructions
+Note, the Terraform scripts are configured to use EC2 instances which should not accrue and costs.
+
+1. Ensure that your git secrets are configured with an AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for terraform to run
+2. Install Terraform within your development environment
+2. Run `terraform apply`. 
+3. Go to AWS Console, ensure that the following have been created:
+    * IAM Role called ecs-agent
+    * Auto-scaling group for EC2
+    * Launch configuration for EC2
+    * ECS Cluster
+    * ECS Task Definition
+    * ECS Service
+    * ECR Repository
+
+Github is responsible for deploying the docker image to the elastic container repository. Have a look inside the created ECR, if you can't see an image there it typically means the deployment of the image has failed from Github Actions
