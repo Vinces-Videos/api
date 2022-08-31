@@ -1,4 +1,5 @@
 using Database;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -25,5 +26,22 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Exception middleware - Using a lambda allows access to the error before returning the response.
+// Means we don't have to write exception handling on individual endpoints, instead we can do it here, globally.
+app.UseExceptionHandler(exceptionHandlerApp =>
+    {
+        exceptionHandlerApp.Run(async context =>
+        {
+            var exceptionHandlerPathFeature =
+                context.Features.Get<IExceptionHandlerPathFeature>();
+
+            if (exceptionHandlerPathFeature?.Error is KeyNotFoundException)
+            {
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsync("This id was not found.");
+            }
+        });
+    });
 
 app.Run();
