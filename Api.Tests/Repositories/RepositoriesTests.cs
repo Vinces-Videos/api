@@ -18,8 +18,7 @@ public class RepositoriesTests
         new Product
         {
             Id = "1",
-            Title = "Product 1",
-            Type = "N/A",
+            Name = "Product 1",
             StockCount = 5
         }
     };
@@ -54,8 +53,7 @@ public class RepositoriesTests
 
         //Assert
         Assert.AreEqual(expectedProduct.Id, actualProduct.Id);
-        Assert.AreEqual(expectedProduct.Title, actualProduct.Title);
-        Assert.AreEqual(expectedProduct.Type, actualProduct.Type);
+        Assert.AreEqual(expectedProduct.Name, actualProduct.Name);
         Assert.AreEqual(expectedProduct.StockCount, actualProduct.StockCount);
     }
 }
