@@ -1,5 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Api;
+using System.Collections.Generic;
+using Models;
+using MongoDB.Driver;
+using System;
 
 namespace Api.Tests;
 
@@ -13,11 +17,5 @@ public class ProductTests
     public void HasCategoryTag()
     {
 
-    }
-
-    [TestMethod]
-    //Ensures the video has a valid due date
-    public void HasDueDate()
-    {
     }
 }

@@ -1,4 +1,6 @@
 using Models;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Database;
 
@@ -7,8 +9,12 @@ public interface IDatabaseController
     //Ensures that the ID you're passing in is valid for the db service
     public bool IsValidId(string id);
 
+    IMongoCollection<T> GetCollection<T>();
+
+    IMongoQueryable<T> GetQueryableCollection<T>();
+
     //Get a full rowset from a collection
-    public List<T> GetCollection<T>();
+    public List<T> GetCollectionRows<T>();
 
     //Get a rowset from a collection by it's class type
     public List<T> GetCollectionByType<T>();

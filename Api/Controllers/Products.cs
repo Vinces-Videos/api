@@ -10,15 +10,17 @@ namespace Controllers;
 public class ProductsController : ControllerBase
 {
     private IDatabaseController db;
+    private Repositories.IProducts _productRepo;
 
     //Dependency inject the IDatabaseController into the controller
-    public ProductsController(IDatabaseController _db)
+    public ProductsController(IDatabaseController _db, Repositories.IProducts productRepo)
     {
         db = _db;
+        _productRepo = productRepo;
     }
 
     [HttpGet(Name = "GetProducts")]
-    public List<Product> Get() => db.GetCollection<Product>();
+    public List<Product> Get() => db.GetCollectionRows<Product>();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
@@ -29,7 +31,7 @@ public class ProductsController : ControllerBase
 
         try 
         {
-            return Ok(db.GetById<Product>(id));
+            return Ok(_productRepo.Get(id));
         }
         catch(KeyNotFoundException)
         {

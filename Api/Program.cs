@@ -10,6 +10,9 @@ builder.Services.AddSwaggerGen();
 // Dependency inject our IDatabaseController into the project
 builder.Services.AddSingleton<IDatabaseController, MongoController>();
 
+// We add the repository as a singleton so we don't rebuild the cache.
+builder.Services.AddSingleton<Repositories.IProducts, Repositories.Products>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
