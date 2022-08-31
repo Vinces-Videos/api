@@ -30,7 +30,7 @@ public class RepositoriesTests
     [TestInitialize]
     public void Setup()
     {
-        var databaseControllerMock = new Mock<IDatabaseController>();
+        var databaseControllerMock = new Mock<IDatabaseContext>();
 
         _productsQueryableMock = new Api.Tests.Database.MongoQueryable<Product>();
         _productsQueryableMock.MockData = _products;

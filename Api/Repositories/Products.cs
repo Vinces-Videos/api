@@ -14,7 +14,7 @@ public class Products : IProducts
     private IMongoQueryable<Product> _queryableProducts;
     private IMongoCollection<Product> _productCollection;
 
-    public Products(IDatabaseController dbController)
+    public Products(IDatabaseContext dbController)
     {
         var memoryCacheOptions = new MemoryCacheOptions 
         {

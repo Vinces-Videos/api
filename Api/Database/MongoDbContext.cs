@@ -7,14 +7,14 @@ using Helpers;
 namespace Database;
 
 //Controllers can inherit from DBController to interact with the DB
-public class MongoController : IDatabaseController
+public class MongoDbContext : IDatabaseContext
 {
     //The mongo DB client
     private IMongoClient _dbClient { get; }
     //The database object
     private IMongoDatabase _database { get; }
 
-    public MongoController(IConfiguration configuration)
+    public MongoDbContext(IConfiguration configuration)
     {
         //The connection string to the MongoDB Server
         var connectionString = configuration["MongoDBConnectionString"];
@@ -24,14 +24,14 @@ public class MongoController : IDatabaseController
         _database = _dbClient.GetDatabase(dbName);
     }
 
-    public MongoController(IMongoClient mongoClient)
+    public MongoDbContext(IMongoClient mongoClient)
     {
         _dbClient = mongoClient;
         _database = _dbClient.GetDatabase("Test");
     }
 
     //Checks whether an ID can be parsed by MongoDB or not
-    public bool IsValidId(string id) => ObjectId.TryParse(id, out ObjectId objectId);
+    
 
     //Returns the list of available databases on the mongo client as a string.
     public string DatabaseListAsCVS() => string.Join(", ", _dbClient.ListDatabaseNames().ToList());

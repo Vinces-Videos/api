@@ -9,24 +9,24 @@ namespace Controllers;
 [Produces("application/json")]
 public class ProductsController : ControllerBase
 {
-    private IDatabaseController db;
     private Repositories.IProducts _productRepo;
+    private IDatabaseValidations _databaseValidations;
 
     //Dependency inject the IDatabaseController into the controller
-    public ProductsController(IDatabaseController _db, Repositories.IProducts productRepo)
+    public ProductsController(Repositories.IProducts productRepo, IDatabaseValidations databaseValidations)
     {
-        db = _db;
         _productRepo = productRepo;
+        _databaseValidations = databaseValidations;
     }
 
     [HttpGet(Name = "GetProducts")]
-    public List<Product> Get() => db.GetCollectionRows<Product>();
+    public List<Product> Get() => _productRepo.GetProducts();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-        if(!db.IsValidId(id))
+        if(!_databaseValidations.IsValidId(id))
             return BadRequest();
 
         try 

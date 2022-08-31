@@ -7,8 +7,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Dependency inject our IDatabaseController into the project
-builder.Services.AddSingleton<IDatabaseController, MongoController>();
+// Dependency inject our IDatabaseController into the project - this could be extended to inject different database providers.
+builder.Services.AddSingleton<IDatabaseContext, MongoDbContext>();
+builder.Services.AddSingleton<IDatabaseValidations, MongoDatabaseValidations>();
 
 // We add the repository as a singleton so we don't rebuild the cache.
 builder.Services.AddSingleton<Repositories.IProducts, Repositories.Products>();
