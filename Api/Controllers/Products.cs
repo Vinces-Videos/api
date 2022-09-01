@@ -9,31 +9,48 @@ namespace Controllers;
 [Produces("application/json")]
 public class ProductsController : ControllerBase
 {
-    private IDatabaseController db;
+    private Services.IProducts _productService;
+    private IDatabaseValidations _databaseValidations;
 
     //Dependency inject the IDatabaseController into the controller
-    public ProductsController(IDatabaseController _db)
+    public ProductsController(Services.IProducts productRepo, IDatabaseValidations databaseValidations)
     {
-        db = _db;
+        _productService = productRepo;
+        _databaseValidations = databaseValidations;
     }
 
     [HttpGet(Name = "GetProducts")]
-    public List<Product> Get() => db.GetCollection<Product>();
+    public List<Product> Get() => _productService.GetProducts();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-        if(!db.IsValidId(id))
+        if(!_databaseValidations.IsValidId(id))
             return BadRequest();
 
-        try 
-        {
-            return Ok(db.GetById<Product>(id));
-        }
-        catch(KeyNotFoundException)
-        {
-            return NotFound();
-        }        
+        return Ok(_productService.Get(id));
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(string id)
+    {
+        if(!_databaseValidations.IsValidId(id))
+            return BadRequest();
+
+        _productService.Delete(id);
+
+        return Ok();
+    }
+
+    [HttpPut]
+    public IActionResult Update(Product product)
+    {
+        if(!_databaseValidations.IsValidId(product.Id))
+            return BadRequest();
+
+        _productService.Put(product);
+
+        return Ok();
     }
 }

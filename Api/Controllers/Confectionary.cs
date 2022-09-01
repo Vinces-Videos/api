@@ -9,12 +9,14 @@ namespace Controllers;
 [Produces("application/json")]
 public class ConfectionaryController : ControllerBase
 {
-    private IDatabaseController db;
+    private IDatabaseContext db;
+    private IDatabaseValidations _dbValidations;
 
     //Dependency inject the IDatabaseController into the controller
-    public ConfectionaryController(IDatabaseController _db)
+    public ConfectionaryController(IDatabaseContext _db, IDatabaseValidations dbValidations)
     {
         db = _db;
+        _dbValidations = dbValidations;
     }
 
     [HttpGet(Name = "GetConfectionary")]
@@ -24,7 +26,7 @@ public class ConfectionaryController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult Get(string id)
     {
-        if(!db.IsValidId(id))
+        if(!_dbValidations.IsValidId(id))
             return BadRequest();
 
         try 
@@ -43,7 +45,7 @@ public class ConfectionaryController : ControllerBase
     [HttpDelete(Name = "DeleteConfectionary")]
     public IActionResult Delete(string id)
     {
-        if(!db.IsValidId(id))
+        if(!_dbValidations.IsValidId(id))
             return BadRequest();
 
         try 

@@ -7,10 +7,10 @@ using Models;
 [Produces("application/json")]
 public class VideosController : ControllerBase
 {
-    private IDatabaseController db;
+    private IDatabaseContext db;
 
     //Dependency inject the IDatabaseController into the controller
-    public VideosController(IDatabaseController _db)
+    public VideosController(IDatabaseContext _db)
     {
         db = _db;
     }

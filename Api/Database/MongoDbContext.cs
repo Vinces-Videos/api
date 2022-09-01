@@ -1,4 +1,5 @@
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using MongoDB.Bson;
 using Models;
 using Helpers;
@@ -6,14 +7,14 @@ using Helpers;
 namespace Database;
 
 //Controllers can inherit from DBController to interact with the DB
-public class MongoController : IDatabaseController
+public class MongoDbContext : IDatabaseContext
 {
     //The mongo DB client
-    private MongoClient _dbClient { get; }
+    private IMongoClient _dbClient { get; }
     //The database object
     private IMongoDatabase _database { get; }
 
-    public MongoController(IConfiguration configuration)
+    public MongoDbContext(IConfiguration configuration)
     {
         //The connection string to the MongoDB Server
         var connectionString = configuration["MongoDBConnectionString"];
@@ -23,14 +24,24 @@ public class MongoController : IDatabaseController
         _database = _dbClient.GetDatabase(dbName);
     }
 
+    public MongoDbContext(IMongoClient mongoClient)
+    {
+        _dbClient = mongoClient;
+        _database = _dbClient.GetDatabase("Test");
+    }
+
     //Checks whether an ID can be parsed by MongoDB or not
-    public bool IsValidId(string id) => ObjectId.TryParse(id, out ObjectId objectId);
+    
 
     //Returns the list of available databases on the mongo client as a string.
     public string DatabaseListAsCVS() => string.Join(", ", _dbClient.ListDatabaseNames().ToList());
 
+    public IMongoCollection<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
+
+    public IMongoQueryable<T> GetQueryableCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
+
     //A collection is equivilant to a table, returns a full unfiltered table.
-    public List<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(_ => true).ToList();
+    public List<T> GetCollectionRows<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(_ => true).ToList();
 
     //A collection is equivilant to a table, returns a full unfiltered table.
     public List<T> GetCollectionByType<T>()
@@ -43,9 +54,9 @@ public class MongoController : IDatabaseController
     //Get a single record by it's object Id from the database.
     public T GetById<T>(string id) where T : DatabaseItem
     {
-        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
+        var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
         
-        var result = collection.FirstOrDefault<T>(x => x.Id == id);
+        var result = collection.Find(x => x.Id == id).FirstOrDefault();
         if (result == null)
             throw new KeyNotFoundException();
 
