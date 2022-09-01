@@ -29,12 +29,14 @@ builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
 builder.Services.AddSingleton<IRentalsRepository, RentalsRepository>();
 builder.Services.AddSingleton<IInvoicesRepository, InvoicesRepository>();
 builder.Services.AddSingleton<ICustomersRepository, CustomersRepository>();
+builder.Services.AddSingleton<IConfectionaryRepository, ConfectionaryRepository>();
 
 // We can add the services as transient which will allow them to spun up per request or reused as per ASP.NET's will.
 builder.Services.AddTransient<IRentalsService, RentalsService>();
 builder.Services.AddTransient<IInvoicesService, InvoicesService>();
 builder.Services.AddTransient<ICustomersService, CustomersService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
+builder.Services.AddTransient<IConfectionaryService, ConfectionaryService>();
 
 var app = builder.Build();
 

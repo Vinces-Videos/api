@@ -1,16 +1,14 @@
 using Microsoft.Extensions.Caching.Memory;
 using Models;
 using Database;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 
 namespace Repositories;
 
 public class InvoicesRepository : IInvoicesRepository
 {
     private IMemoryCache _cache;
-    private IQueryable<Invoice> _queryableInvoices;
-    private IDatabaseCollection<Invoice> _invoiceCollection;
+    private IQueryable<Invoice> _queryable;
+    private IDatabaseCollection<Invoice> _collection;
 
     public InvoicesRepository(IDatabaseContext dbController)
     {
@@ -22,8 +20,8 @@ public class InvoicesRepository : IInvoicesRepository
 
         _cache = new MemoryCache(memoryCacheOptions);
 
-        _queryableInvoices = dbController.GetQueryableCollection<Invoice>();
-        _invoiceCollection = dbController.GetCollection<Invoice>();
+        _queryable = dbController.GetQueryableCollection<Invoice>();
+        _collection = dbController.GetCollection<Invoice>();
     }
 
     public Invoice Get(string id)
@@ -32,7 +30,7 @@ public class InvoicesRepository : IInvoicesRepository
             cacheEntry.Size = 1;
             cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
 
-            var result = _queryableInvoices.FirstOrDefault(x => x.Id == id);
+            var result = _queryable.FirstOrDefault(x => x.Id == id);
 
             if (result == null)
             {
@@ -45,7 +43,7 @@ public class InvoicesRepository : IInvoicesRepository
 
     public Invoice Get(string id, bool bipassCache)
     {
-        var result = _queryableInvoices.FirstOrDefault(x => x.Id == id);
+        var result = _queryable.FirstOrDefault(x => x.Id == id);
 
         if (result == null)
         {
@@ -64,7 +62,7 @@ public class InvoicesRepository : IInvoicesRepository
 
     public Invoice Put(Invoice invoice)
     {
-        _invoiceCollection.InsertOne(invoice);
+        _collection.InsertOne(invoice);
         _cache.Set(invoice.Id, new MemoryCacheEntryOptions
         {
             Size = 1,
@@ -76,11 +74,11 @@ public class InvoicesRepository : IInvoicesRepository
 
     public List<Invoice> GetInvoices()
     {
-        return _queryableInvoices.ToList();
+        return _queryable.ToList();
     }
 
     public void Delete(string id)
     {
-        _invoiceCollection.DeleteOne(id);
+        _collection.DeleteOne(id);
     }
 }

@@ -11,7 +11,7 @@ using Database;
 namespace Api.Tests.Repositories;
 
 [TestClass]
-public class RepositoriesTests
+public class ProductRepositoryTests
 {
     private List<Product> _products = new List<Product>
     {
@@ -23,7 +23,7 @@ public class RepositoriesTests
         }
     };
 
-    private Api.Tests.Database.MongoQueryable<Product> _productsQueryableMock = new Api.Tests.Database.MongoQueryable<Product>();
+    private IQueryable<Product> _productsQueryableMock;
 
     private ProductsRepository _sut;
 
@@ -32,8 +32,7 @@ public class RepositoriesTests
     {
         var databaseControllerMock = new Mock<IDatabaseContext>();
 
-        _productsQueryableMock = new Api.Tests.Database.MongoQueryable<Product>();
-        _productsQueryableMock.MockData = _products;
+        _productsQueryableMock = _products.AsQueryable();
 
         databaseControllerMock.Setup(x => x.GetQueryableCollection<Product>()).Returns(_productsQueryableMock);
         databaseControllerMock.Setup(x => x.GetById<Product>(It.IsAny<string>())).Returns((string id) => _products.First(x => x.Id == id));
