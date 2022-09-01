@@ -1,6 +1,6 @@
 using Database;
 
-namespace Database.Mongo;
+namespace Database;
 
 public class DatabaseValidationsMock : IDatabaseValidations
 {

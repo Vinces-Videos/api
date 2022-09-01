@@ -1,6 +1,8 @@
 using Database;
 using Database.Mongo;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Caching.Memory;
+using Models;
 using Repositories;
 using Services;
 
@@ -30,6 +32,13 @@ builder.Services.AddSingleton<IRentalsRepository, RentalsRepository>();
 builder.Services.AddSingleton<IInvoicesRepository, InvoicesRepository>();
 builder.Services.AddSingleton<ICustomersRepository, CustomersRepository>();
 builder.Services.AddSingleton<IConfectionaryRepository, ConfectionaryRepository>();
+builder.Services.AddSingleton<IDatabaseItemRepository<FilmCategory>, DatabaseItemRepository<FilmCategory>>(provider => 
+        new DatabaseItemRepository<FilmCategory>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: new MemoryCacheOptions {
+                SizeLimit = 1000,
+                ExpirationScanFrequency = TimeSpan.FromSeconds(10)
+            }));
 
 // We can add the services as transient which will allow them to spun up per request or reused as per ASP.NET's will.
 builder.Services.AddTransient<IRentalsService, RentalsService>();
@@ -37,6 +46,8 @@ builder.Services.AddTransient<IInvoicesService, InvoicesService>();
 builder.Services.AddTransient<ICustomersService, CustomersService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<IConfectionaryService, ConfectionaryService>();
+builder.Services.AddTransient<IFilmCategoryService, FilmCategoryService>();
+
 
 var app = builder.Build();
 
