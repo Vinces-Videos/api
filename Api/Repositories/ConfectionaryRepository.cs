@@ -4,13 +4,13 @@ using Database;
 
 namespace Repositories;
 
-public class CustomersRepository : ICustomersRepository
+public class ConfectionaryRepository : IConfectionaryRepository
 {
     private IMemoryCache _cache;
-    private IQueryable<Customer> _queryable;
-    private IDatabaseCollection<Customer> _collection;
+    private IQueryable<Confectionary> _queryable;
+    private IDatabaseCollection<Confectionary> _collection;
 
-    public CustomersRepository(IDatabaseContext dbController)
+    public ConfectionaryRepository(IDatabaseContext dbController)
     {
         var memoryCacheOptions = new MemoryCacheOptions 
         {
@@ -20,11 +20,11 @@ public class CustomersRepository : ICustomersRepository
 
         _cache = new MemoryCache(memoryCacheOptions);
 
-        _queryable = dbController.GetQueryableCollection<Customer>();
-        _collection = dbController.GetCollection<Customer>();
+        _queryable = dbController.GetQueryableCollection<Confectionary>();
+        _collection = dbController.GetCollection<Confectionary>();
     }
 
-    public Customer Get(string id)
+    public Confectionary Get(string id)
     {
         return _cache.GetOrCreate(id, cacheEntry => {
             cacheEntry.Size = 1;
@@ -41,7 +41,7 @@ public class CustomersRepository : ICustomersRepository
         });
     }
 
-    public Customer Get(string id, bool bipassCache)
+    public Confectionary Get(string id, bool bipassCache)
     {
         var result = _queryable.FirstOrDefault(x => x.Id == id);
 
@@ -60,19 +60,19 @@ public class CustomersRepository : ICustomersRepository
     }
 
 
-    public Customer Put(Customer customer)
+    public Confectionary Put(Confectionary confectionary)
     {
-        _collection.InsertOne(customer);
-        _cache.Set(customer.Id, new MemoryCacheEntryOptions
+        _collection.InsertOne(confectionary);
+        _cache.Set(confectionary.Id, new MemoryCacheEntryOptions
         {
             Size = 1,
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
         });
         
-        return customer;
+        return confectionary;
     }
 
-    public List<Customer> Get()
+    public List<Confectionary> Get()
     {
         return _queryable.ToList();
     }

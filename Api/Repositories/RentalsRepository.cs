@@ -1,8 +1,6 @@
 using Database;
 using Microsoft.Extensions.Caching.Memory;
 using Models;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 
 namespace Repositories;
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Database;
 using Models;
+using Services;
 
 namespace Controllers;
 
@@ -9,18 +10,18 @@ namespace Controllers;
 [Produces("application/json")]
 public class ConfectionaryController : ControllerBase
 {
-    private IDatabaseContext db;
+    private IConfectionaryService _confectionaryService;
     private IDatabaseValidations _dbValidations;
 
     //Dependency inject the IDatabaseController into the controller
-    public ConfectionaryController(IDatabaseContext _db, IDatabaseValidations dbValidations)
+    public ConfectionaryController(IConfectionaryService confectionaryService, IDatabaseValidations dbValidations)
     {
-        db = _db;
+        _confectionaryService = confectionaryService;
         _dbValidations = dbValidations;
     }
 
     [HttpGet(Name = "GetConfectionary")]
-    public List<Confectionary> Get() => db.GetCollectionByType<Confectionary>();
+    public List<Confectionary> Get() => _confectionaryService.Get();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]
@@ -28,19 +29,12 @@ public class ConfectionaryController : ControllerBase
     {
         if(!_dbValidations.IsValidId(id))
             return BadRequest();
-
-        try 
-        {
-            return Ok(db.GetById<Confectionary>(id));
-        }
-        catch(KeyNotFoundException)
-        {
-            return NotFound();
-        }        
+        
+        return Ok(_confectionaryService.Get(id));   
     }
 
     [HttpPost(Name = "CreateConfectionary")]
-    public IActionResult Post(Confectionary input) => Content($"A new record has been inserted with an Id of {db.Insert<Confectionary>(input)}");
+    public IActionResult Post(Confectionary input) => Content($"A new record has been inserted with an Id of {_confectionaryService.Put(input)}");
 
     [HttpDelete(Name = "DeleteConfectionary")]
     public IActionResult Delete(string id)
@@ -48,13 +42,7 @@ public class ConfectionaryController : ControllerBase
         if(!_dbValidations.IsValidId(id))
             return BadRequest();
 
-        try 
-        {
-            return Ok(db.DeleteById<Confectionary>(id));
-        }
-        catch(KeyNotFoundException)
-        {
-            return NotFound();
-        }   
+        _confectionaryService.Delete(id);
+        return Ok();
     }
 }
