@@ -1,12 +1,13 @@
 using Models;
+using Repositories;
 
 namespace Services;
 
-public class Products : IProducts
+public class ProductsService : IProductsService
 {
-    private Repositories.IProducts _productRepo;
+    private IProductsRepository _productRepo;
 
-    public Products(Repositories.IProducts productRepo)
+    public ProductsService(IProductsRepository productRepo)
     {
         _productRepo = productRepo;
     }

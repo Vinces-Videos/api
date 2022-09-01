@@ -2,7 +2,7 @@ using Models;
 
 namespace Repositories;
 
-public interface IProducts
+public interface IProductsRepository
 {
     Product Get(string id);
     List<Product> GetProducts();

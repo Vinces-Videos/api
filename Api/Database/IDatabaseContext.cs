@@ -1,16 +1,12 @@
 using Models;
-// We want to remove these dependancies
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-
 namespace Database;
 
 public interface IDatabaseContext
 {
     // These methods require mongo database - instead we should make these generic, likely though IQueryable
-    IMongoCollection<T> GetCollection<T>();
+    IDatabaseCollection<T> GetCollection<T>();
 
-    IMongoQueryable<T> GetQueryableCollection<T>();
+    IQueryable<T> GetQueryableCollection<T>();
 
     //Get a full rowset from a collection
     public List<T> GetCollectionRows<T>();

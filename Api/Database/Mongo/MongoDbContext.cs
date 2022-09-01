@@ -3,8 +3,9 @@ using MongoDB.Driver.Linq;
 using MongoDB.Bson;
 using Models;
 using Helpers;
+using Database;
 
-namespace Database;
+namespace Database.Mongo;
 
 //Controllers can inherit from DBController to interact with the DB
 public class MongoDbContext : IDatabaseContext
@@ -36,9 +37,9 @@ public class MongoDbContext : IDatabaseContext
     //Returns the list of available databases on the mongo client as a string.
     public string DatabaseListAsCVS() => string.Join(", ", _dbClient.ListDatabaseNames().ToList());
 
-    public IMongoCollection<T> GetCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
+    public IDatabaseCollection<T> GetCollection<T>() => new MongoDatabaseCollection<T>(_database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))));
 
-    public IMongoQueryable<T> GetQueryableCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
+    public IQueryable<T> GetQueryableCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
 
     //A collection is equivilant to a table, returns a full unfiltered table.
     public List<T> GetCollectionRows<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).Find(_ => true).ToList();
