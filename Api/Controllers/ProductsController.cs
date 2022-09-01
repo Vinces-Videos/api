@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Database;
 using Models;
+using Services;
 
 namespace Controllers;
 
@@ -9,11 +10,11 @@ namespace Controllers;
 [Produces("application/json")]
 public class ProductsController : ControllerBase
 {
-    private Services.IProducts _productService;
+    private IProductsService _productService;
     private IDatabaseValidations _databaseValidations;
 
     //Dependency inject the IDatabaseController into the controller
-    public ProductsController(Services.IProducts productRepo, IDatabaseValidations databaseValidations)
+    public ProductsController(IProductsService productRepo, IDatabaseValidations databaseValidations)
     {
         _productService = productRepo;
         _databaseValidations = databaseValidations;

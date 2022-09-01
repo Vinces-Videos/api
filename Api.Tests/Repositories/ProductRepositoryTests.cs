@@ -25,7 +25,7 @@ public class RepositoriesTests
 
     private Api.Tests.Database.MongoQueryable<Product> _productsQueryableMock = new Api.Tests.Database.MongoQueryable<Product>();
 
-    private Products _sut;
+    private ProductsRepository _sut;
 
     [TestInitialize]
     public void Setup()
@@ -39,7 +39,7 @@ public class RepositoriesTests
         databaseControllerMock.Setup(x => x.GetById<Product>(It.IsAny<string>())).Returns((string id) => _products.First(x => x.Id == id));
         var databaseController = databaseControllerMock.Object;
 
-        _sut = new Products(databaseController);
+        _sut = new ProductsRepository(databaseController);
     }
 
     [TestMethod]

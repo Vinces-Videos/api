@@ -1,6 +1,7 @@
 using MongoDB.Bson;
+using Database;
 
-namespace Database;
+namespace Database.Mongo;
 
 public class MongoDatabaseValidations : IDatabaseValidations
 {

@@ -2,7 +2,7 @@ using Models;
 
 namespace Services;
 
-public interface IProducts
+public interface IProductsService
 {
     Product Get(string id);
     List<Product> GetProducts();

@@ -1,5 +1,3 @@
-
-
 using Microsoft.Extensions.Caching.Memory;
 using Models;
 using Database;
@@ -8,13 +6,13 @@ using MongoDB.Driver.Linq;
 
 namespace Repositories;
 
-public class Products : IProducts
+public class InvoicesRepository : IInvoicesRepository
 {
     private IMemoryCache _cache;
-    private IMongoQueryable<Product> _queryableProducts;
-    private IMongoCollection<Product> _productCollection;
+    private IQueryable<Invoice> _queryableInvoices;
+    private IDatabaseCollection<Invoice> _invoiceCollection;
 
-    public Products(IDatabaseContext dbController)
+    public InvoicesRepository(IDatabaseContext dbController)
     {
         var memoryCacheOptions = new MemoryCacheOptions 
         {
@@ -24,34 +22,34 @@ public class Products : IProducts
 
         _cache = new MemoryCache(memoryCacheOptions);
 
-        _queryableProducts = dbController.GetQueryableCollection<Product>();
-        _productCollection = dbController.GetCollection<Product>();
+        _queryableInvoices = dbController.GetQueryableCollection<Invoice>();
+        _invoiceCollection = dbController.GetCollection<Invoice>();
     }
 
-    public Product Get(string id)
+    public Invoice Get(string id)
     {
         return _cache.GetOrCreate(id, cacheEntry => {
             cacheEntry.Size = 1;
             cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10);
 
-            var result = _queryableProducts.FirstOrDefault(x => x.Id == id);
+            var result = _queryableInvoices.FirstOrDefault(x => x.Id == id);
 
             if (result == null)
             {
-                throw new KeyNotFoundException($"Failed to find Product with id: {id}");
+                throw new KeyNotFoundException($"Failed to find item with id: {id}");
             }
 
             return result;
         });
     }
 
-    public Product Get(string id, bool bipassCache)
+    public Invoice Get(string id, bool bipassCache)
     {
-        var result = _queryableProducts.FirstOrDefault(x => x.Id == id);
+        var result = _queryableInvoices.FirstOrDefault(x => x.Id == id);
 
         if (result == null)
         {
-            throw new KeyNotFoundException($"Failed to find Product with id: {id}");
+            throw new KeyNotFoundException($"Failed to find item with id: {id}");
         }
 
         _cache.Set(id, new MemoryCacheEntryOptions
@@ -64,25 +62,25 @@ public class Products : IProducts
     }
 
 
-    public Product Put(Product product)
+    public Invoice Put(Invoice invoice)
     {
-        _productCollection.InsertOne(product);
-        _cache.Set(product.Id, new MemoryCacheEntryOptions
+        _invoiceCollection.InsertOne(invoice);
+        _cache.Set(invoice.Id, new MemoryCacheEntryOptions
         {
             Size = 1,
             AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
         });
         
-        return product;
+        return invoice;
     }
 
-    public List<Product> GetProducts()
+    public List<Invoice> GetInvoices()
     {
-        return _queryableProducts.ToList();
+        return _queryableInvoices.ToList();
     }
 
     public void Delete(string id)
     {
-        _productCollection.DeleteOne(id);
+        _invoiceCollection.DeleteOne(id);
     }
 }
