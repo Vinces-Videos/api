@@ -5,7 +5,7 @@ namespace Services;
 public interface IInvoicesService
 {
     Invoice Get(string id);
-    List<Invoice> GetInvoices();
+    List<Invoice> Get();
     void Delete(string id);
     Invoice Put(Invoice Invoice);
 }

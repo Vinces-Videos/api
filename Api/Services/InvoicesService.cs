@@ -21,7 +21,7 @@ public class InvoicesService : IInvoicesService
         throw new NotImplementedException();
     }
 
-    public List<Invoice> GetInvoices()
+    public List<Invoice> Get()
     {
         throw new NotImplementedException();
     }
