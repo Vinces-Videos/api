@@ -4,30 +4,30 @@ namespace Services;
 
 public class ConfectionaryService : IConfectionaryService
 {
-    private Repositories.IConfectionaryRepository _repo;
+    private Repositories.IDatabaseItemRepository<Confectionary> _repo;
 
-    public ConfectionaryService(Repositories.IConfectionaryRepository repo)
+    public ConfectionaryService(Repositories.IDatabaseItemRepository<Confectionary> repo)
     {
         _repo = repo;
     }
 
     public void Delete(string id)
     {
-        throw new NotImplementedException();
+        _repo.Delete(id);
     }
 
     public Confectionary Get(string id)
     {
-        throw new NotImplementedException();
+        return _repo.Get(id);
     }
 
     public List<Confectionary> Get()
     {
-        throw new NotImplementedException();
+        return _repo.Get();
     }
 
     public Confectionary Put(Confectionary confectionary)
     {
-        throw new NotImplementedException();
+        return _repo.Put(confectionary);
     }
 }
