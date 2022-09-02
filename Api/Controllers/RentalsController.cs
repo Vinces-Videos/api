@@ -21,7 +21,7 @@ public class RentalsController : ControllerBase
     }
 
     [HttpGet(Name = "GetRentals")]
-    public List<Rental> Get() => _rentalService.GetRentals();
+    public List<Rental> Get() => _rentalService.Get();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]

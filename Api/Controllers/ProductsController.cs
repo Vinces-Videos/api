@@ -21,7 +21,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet(Name = "GetProducts")]
-    public List<Product> Get() => _productService.GetProducts();
+    public List<Product> Get() => _productService.Get();
 
     //Gets a database item by its Id and returns the result
     [HttpGet("{id}")]

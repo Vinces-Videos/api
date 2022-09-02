@@ -4,7 +4,7 @@ using Database;
 using MongoDB.Driver;
 using Models;
 
-namespace Database.Mongo;
+namespace Database;
 
 public class DatabaseCollectionMock<T> : IDatabaseCollection<T> where T : DatabaseItem
 {

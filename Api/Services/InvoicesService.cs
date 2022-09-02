@@ -4,9 +4,9 @@ namespace Services;
 
 public class InvoicesService : IInvoicesService
 {
-    private Repositories.IInvoicesRepository _invoicesRepo;
+    private Repositories.IDatabaseItemRepository<Invoice> _invoicesRepo;
 
-    public InvoicesService(Repositories.IInvoicesRepository invoicesRepo)
+    public InvoicesService(Repositories.IDatabaseItemRepository<Invoice> invoicesRepo)
     {
         _invoicesRepo = invoicesRepo;
     }

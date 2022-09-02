@@ -1,6 +1,8 @@
 using Database;
 using Database.Mongo;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Caching.Memory;
+using Models;
 using Repositories;
 using Services;
 
@@ -24,12 +26,48 @@ switch (builder.Configuration["DatabaseType"])
     //Add support for other databases here
 }
 
+var cacheOptions = new MemoryCacheOptions
+{   
+    SizeLimit = 1000,
+    ExpirationScanFrequency = TimeSpan.FromSeconds(10)
+};
+
 // We add the repository as a singleton so we don't rebuild the cache.
-builder.Services.AddSingleton<IProductsRepository, ProductsRepository>();
-builder.Services.AddSingleton<IRentalsRepository, RentalsRepository>();
-builder.Services.AddSingleton<IInvoicesRepository, InvoicesRepository>();
-builder.Services.AddSingleton<ICustomersRepository, CustomersRepository>();
-builder.Services.AddSingleton<IConfectionaryRepository, ConfectionaryRepository>();
+builder.Services.AddSingleton<IDatabaseItemRepository<Product>, DatabaseItemRepository<Product>>(provider => 
+        new DatabaseItemRepository<Product>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<Rental>, DatabaseItemRepository<Rental>>(provider => 
+        new DatabaseItemRepository<Rental>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<Invoice>, DatabaseItemRepository<Invoice>>(provider => 
+        new DatabaseItemRepository<Invoice>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<Customer>, DatabaseItemRepository<Customer>>(provider => 
+        new DatabaseItemRepository<Customer>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<Confectionary>, DatabaseItemRepository<Confectionary>>(provider => 
+        new DatabaseItemRepository<Confectionary>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<FilmCategory>, DatabaseItemRepository<FilmCategory>>(provider => 
+        new DatabaseItemRepository<FilmCategory>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+            ));
 
 // We can add the services as transient which will allow them to spun up per request or reused as per ASP.NET's will.
 builder.Services.AddTransient<IRentalsService, RentalsService>();
@@ -37,6 +75,8 @@ builder.Services.AddTransient<IInvoicesService, InvoicesService>();
 builder.Services.AddTransient<ICustomersService, CustomersService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<IConfectionaryService, ConfectionaryService>();
+builder.Services.AddTransient<IFilmCategoryService, FilmCategoryService>();
+
 
 var app = builder.Build();
 

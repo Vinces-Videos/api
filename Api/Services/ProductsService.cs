@@ -5,9 +5,9 @@ namespace Services;
 
 public class ProductsService : IProductsService
 {
-    private IProductsRepository _productRepo;
+    private IDatabaseItemRepository<Product> _productRepo;
 
-    public ProductsService(IProductsRepository productRepo)
+    public ProductsService(IDatabaseItemRepository<Product> productRepo)
     {
         _productRepo = productRepo;
     }
@@ -22,9 +22,9 @@ public class ProductsService : IProductsService
         return _productRepo.Get(id);
     }
 
-    public List<Product> GetProducts()
+    public List<Product> Get()
     {
-        return _productRepo.GetProducts();
+        return _productRepo.Get();
     }
 
     public Product Put(Product product)

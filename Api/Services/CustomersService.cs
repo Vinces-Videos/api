@@ -4,9 +4,9 @@ namespace Services;
 
 public class CustomersService : ICustomersService
 {
-    private Repositories.ICustomersRepository _repo;
+    private Repositories.IDatabaseItemRepository<Customer> _repo;
 
-    public CustomersService(Repositories.ICustomersRepository repo)
+    public CustomersService(Repositories.IDatabaseItemRepository<Customer> repo)
     {
         _repo = repo;
     }
