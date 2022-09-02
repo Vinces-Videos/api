@@ -8,6 +8,8 @@ using Models;
 using MongoDB.Driver.Linq;
 using System.Linq;
 using Database;
+using Microsoft.Extensions.Caching.Memory;
+
 namespace Api.Tests.Repositories;
 
 [TestClass]
@@ -25,7 +27,7 @@ public class ProductRepositoryTests
 
     private IQueryable<Product> _productsQueryableMock;
 
-    private ProductsRepository _sut;
+    private IDatabaseItemRepository<Product> _sut;
 
     [TestInitialize]
     public void Setup()
@@ -38,7 +40,13 @@ public class ProductRepositoryTests
         databaseControllerMock.Setup(x => x.GetById<Product>(It.IsAny<string>())).Returns((string id) => _products.First(x => x.Id == id));
         var databaseController = databaseControllerMock.Object;
 
-        _sut = new ProductsRepository(databaseController);
+        var cacheOptions = new MemoryCacheOptions
+        {
+            SizeLimit = 1000, 
+            ExpirationScanFrequency = System.TimeSpan.FromSeconds(10)
+        };
+
+        _sut = new DatabaseItemRepository<Product>(databaseController, cacheOptions);
     }
 
     [TestMethod]

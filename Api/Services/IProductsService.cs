@@ -5,7 +5,7 @@ namespace Services;
 public interface IProductsService
 {
     Product Get(string id);
-    List<Product> GetProducts();
+    List<Product> Get();
     void Delete(string id);
     Product Put(Product product);
 }

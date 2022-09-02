@@ -4,9 +4,9 @@ namespace Services;
 
 public class RentalsService : IRentalsService
 {
-    private Repositories.IRentalsRepository _rentalsRepo;
+    private Repositories.IDatabaseItemRepository<Rental> _rentalsRepo;
 
-    public RentalsService(Repositories.IRentalsRepository rentalsRepo)
+    public RentalsService(Repositories.IDatabaseItemRepository<Rental> rentalsRepo)
     {
         _rentalsRepo = rentalsRepo;
     }
@@ -21,9 +21,9 @@ public class RentalsService : IRentalsService
         return _rentalsRepo.Get(id);
     }
 
-    public List<Rental> GetRentals()
+    public List<Rental> Get()
     {
-        return _rentalsRepo.GetRentals();
+        return _rentalsRepo.Get();
     }
 
     public Rental Put(Rental Rental)
