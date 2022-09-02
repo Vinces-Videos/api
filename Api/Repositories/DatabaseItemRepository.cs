@@ -68,7 +68,8 @@ public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : Da
 
     public List<T> Get()
     {
-        return _queryable.ToList();
+        //Some tables contain mixed classes of data, we must ensure that we only return data that's relevent at this point.
+        return _queryable.Where(x => x.Type == typeof(T).Name).ToList();
     }
 
     public void Delete(string id)
