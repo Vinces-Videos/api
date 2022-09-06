@@ -6,5 +6,5 @@ using Microsoft.AspNetCore.Mvc;
 public class HealthCheckController : ControllerBase
 {
     [HttpGet(Name = "GetHealth")]
-    public string Get() => "The API is alive and responding."; 
+    public string Get() => "The API is alive and responding!"; 
 }
