@@ -34,7 +34,7 @@ public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : Da
         });
     }
 
-    public T Get(string id, bool bipassCache)
+    public T Get(string id, bool bipassCache = false)
     {
         var result = _queryable.FirstOrDefault(x => x.Id == id);
 
@@ -51,7 +51,6 @@ public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : Da
 
         return result;
     }
-
 
     public T Put(T item)
     {
