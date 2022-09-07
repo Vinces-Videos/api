@@ -30,7 +30,7 @@ public class DatabaseContextMock<T> : IDatabaseContext
         throw new System.NotImplementedException();
     }
 
-    public IDatabaseCollection<T1> GetCollection<T1>()
+    public IDatabaseCollection<DatabaseItem> GetCollection<T1>()
     {
         throw new System.NotImplementedException();
     }

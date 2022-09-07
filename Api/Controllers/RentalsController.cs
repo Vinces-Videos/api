@@ -45,12 +45,12 @@ public class RentalsController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult Update(Rental Rental)
+    public IActionResult Update(Rental rental)
     {
-        if(!_databaseValidations.IsValidId(Rental.Id))
+        if(!_databaseValidations.IsValidId(rental.Id))
             return BadRequest();
 
-        _rentalService.Put(Rental);
+        _rentalService.Put(rental);
 
         return Ok();
     }

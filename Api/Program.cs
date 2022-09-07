@@ -46,37 +46,43 @@ builder.Services.AddSingleton<IDatabaseItemRepository<Product>, DatabaseItemRepo
         new DatabaseItemRepository<Product>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
 
 builder.Services.AddSingleton<IDatabaseItemRepository<Rental>, DatabaseItemRepository<Rental>>(provider => 
         new DatabaseItemRepository<Rental>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
 
 builder.Services.AddSingleton<IDatabaseItemRepository<Invoice>, DatabaseItemRepository<Invoice>>(provider => 
         new DatabaseItemRepository<Invoice>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
 
 builder.Services.AddSingleton<IDatabaseItemRepository<Customer>, DatabaseItemRepository<Customer>>(provider => 
         new DatabaseItemRepository<Customer>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
 
 builder.Services.AddSingleton<IDatabaseItemRepository<Confectionary>, DatabaseItemRepository<Confectionary>>(provider => 
         new DatabaseItemRepository<Confectionary>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
 
 builder.Services.AddSingleton<IDatabaseItemRepository<FilmCategory>, DatabaseItemRepository<FilmCategory>>(provider => 
         new DatabaseItemRepository<FilmCategory>(
             dbController: provider.GetService<IDatabaseContext>(), 
             options: cacheOptions
-            ));
+        ));
+
+builder.Services.AddSingleton<IDatabaseItemRepository<Video>, DatabaseItemRepository<Video>>(provider => 
+        new DatabaseItemRepository<Video>(
+            dbController: provider.GetService<IDatabaseContext>(), 
+            options: cacheOptions
+        ));
 
 // We can add the services as transient which will allow them to spun up per request or reused as per ASP.NET's will.
 builder.Services.AddTransient<IRentalsService, RentalsService>();
@@ -85,7 +91,7 @@ builder.Services.AddTransient<ICustomersService, CustomersService>();
 builder.Services.AddTransient<IProductsService, ProductsService>();
 builder.Services.AddTransient<IConfectionaryService, ConfectionaryService>();
 builder.Services.AddTransient<IFilmCategoryService, FilmCategoryService>();
-
+builder.Services.AddTransient<IVideosService, VideosService>();
 
 var app = builder.Build();
 

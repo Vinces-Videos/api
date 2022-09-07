@@ -26,7 +26,7 @@ public class FilmCategoryService : IFilmCategoryService
     {
         return _filmCategoryRepo.Get(id);
     }
-
+    
     public FilmCategory Put(FilmCategory filmCategory)
     {
         return _filmCategoryRepo.Put(filmCategory);
