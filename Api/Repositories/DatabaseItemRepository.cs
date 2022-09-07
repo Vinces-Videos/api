@@ -8,7 +8,7 @@ public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : Da
 {
     protected IMemoryCache _cache;
     protected IQueryable<T> _queryable;
-    protected IDatabaseCollection<T> _collection;
+    protected IDatabaseCollection<DatabaseItem> _collection;
 
     public DatabaseItemRepository(IDatabaseContext dbController, MemoryCacheOptions options)
     {

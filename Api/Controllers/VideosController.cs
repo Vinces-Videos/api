@@ -29,8 +29,8 @@ public class VideosController : ControllerBase
     public List<Video> Get() => _videosService.Get();
 
     //Inserts a new video, but before insertion is completed we perform a lookup on the Film Category ID as all Film Categories must have one.
-    [HttpPost(Name = "CreateVideo")]
-    public IActionResult Post(Video input)
+    [HttpPut(Name = "CreateVideo")]
+    public IActionResult Put(Video input)
     {
         if (_db.GetByName<FilmCategory>(input.Category) != null)
         {
@@ -41,15 +41,4 @@ public class VideosController : ControllerBase
             return Content($"Unable to locate category with an id of {input.Category}, all videos must have a valid category");
         }
     }
-
-    [HttpPut]
-    public IActionResult Update(Video video)
-    {
-        if(!_databaseValidations.IsValidId(video.Id))
-            return BadRequest();
-
-        _videosService.Put(video);
-
-        return Ok();
-    } 
 }

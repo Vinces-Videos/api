@@ -3,8 +3,7 @@ namespace Database;
 
 public interface IDatabaseContext
 {
-    // These methods require mongo database - instead we should make these generic, likely though IQueryable
-    IDatabaseCollection<T> GetCollection<T>();
+    IDatabaseCollection<DatabaseItem> GetCollection<T>();
 
     IQueryable<T> GetQueryableCollection<T>();
 

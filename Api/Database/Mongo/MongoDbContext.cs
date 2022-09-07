@@ -37,7 +37,7 @@ public class MongoDbContext : IDatabaseContext
     //Returns the list of available databases on the mongo client as a string.
     public string DatabaseListAsCVS() => string.Join(", ", _dbClient.ListDatabaseNames().ToList());
 
-    public IDatabaseCollection<T> GetCollection<T>() => new MongoDatabaseCollection<T>(_database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))));
+    public IDatabaseCollection<DatabaseItem> GetCollection<T>() => new MongoDatabaseCollection<DatabaseItem>(_database.GetCollection<DatabaseItem>(AttributeHelper.GetDbCollectionName(typeof(T))));
 
     public IQueryable<T> GetQueryableCollection<T>() => _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T))).AsQueryable();
 

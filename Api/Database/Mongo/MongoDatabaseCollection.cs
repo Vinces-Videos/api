@@ -3,7 +3,7 @@ using Models;
 
 namespace Database.Mongo;
 
-public class MongoDatabaseCollection<T> : IDatabaseCollection<T>
+public class MongoDatabaseCollection<T> : IDatabaseCollection<T> where T : DatabaseItem
 {
     private IMongoCollection<T> _mongoCollection;
 
@@ -19,6 +19,11 @@ public class MongoDatabaseCollection<T> : IDatabaseCollection<T>
 
     public void InsertOne(T record)
     {
-        _mongoCollection.InsertOne(record);
+        //Check whether a matching record already exists, if it does replace rather than insert
+        _mongoCollection.ReplaceOne(
+            filter: (rec => rec.Id == record.Id),
+            options: new ReplaceOptions { IsUpsert = true },
+            replacement: record
+        );
     }
 }
