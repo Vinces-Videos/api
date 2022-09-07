@@ -6,9 +6,9 @@ namespace Repositories;
 
 public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : DatabaseItem
 {
-    private IMemoryCache _cache;
-    private IQueryable<T> _queryable;
-    private IDatabaseCollection<T> _collection;
+    protected IMemoryCache _cache;
+    protected IQueryable<T> _queryable;
+    protected IDatabaseCollection<T> _collection;
 
     public DatabaseItemRepository(IDatabaseContext dbController, MemoryCacheOptions options)
     {
@@ -52,7 +52,7 @@ public class DatabaseItemRepository<T> : IDatabaseItemRepository<T> where T : Da
         return result;
     }
 
-
+    //Updates or inserts
     public T Put(T item)
     {
         _collection.InsertOne(item);

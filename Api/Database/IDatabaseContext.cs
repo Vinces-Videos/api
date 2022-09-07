@@ -22,7 +22,5 @@ public interface IDatabaseContext
 
     public bool DeleteById<T>(string id) where T: DatabaseItem;
 
-    public string Update<T>(T record) where T: DatabaseItem;
-
     public string Insert<T>(T record) where T: DatabaseItem;
 }

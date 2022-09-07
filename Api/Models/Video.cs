@@ -12,6 +12,9 @@ public class Video : Product
     [BsonElement("category")]
     public string Category { get; set; }
 
+    [BsonElement("thumbnailUrl")]
+    public string ThumbnailUrl { get; set; }
+
     public Video()
     {
         Type = "Video";

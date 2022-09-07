@@ -81,7 +81,14 @@ public class MongoDbContext : IDatabaseContext
     {
         //In this instance we get as a BsonDocument so we're able to insert as a BsonDocument too.
         var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
-        collection.InsertOne(record);
+
+        //Check whether a matching record already exists, if it does replace rather than insert
+        collection.ReplaceOne(
+            filter: (rec => rec.Id == record.Id),
+            options: new ReplaceOptions { IsUpsert = true },
+            replacement: record
+        );
+
         return record.Id;
     }   
 
@@ -91,10 +98,5 @@ public class MongoDbContext : IDatabaseContext
         //Do we need to do some cleanup on other objects that might reference this? The nature of NoSQL helps with this as they're not Id references
         var collection = _database.GetCollection<T>(AttributeHelper.GetDbCollectionName(typeof(T)));
         return collection.DeleteOne(x => x.Id == id).DeletedCount > 0;
-    }
-
-    public string Update<T>(T record) where T: DatabaseItem
-    {
-        throw new NotImplementedException();
     }
 }
