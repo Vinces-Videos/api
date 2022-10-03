@@ -60,3 +60,19 @@ Note, the Terraform scripts are configured to use EC2 instances which should not
     * ECR Repository
 
 Github is responsible for deploying the docker image to the elastic container repository. Have a look inside the created ECR, if you can't see an image there it typically means the deployment of the image has failed from Github Actions
+
+### Debugging Tips
+You need a few components to debug vinces videos locally. All will need to be running for it to work:
+1. The Mongo DB. This is running within a Docker container, ensure that the volume has been mapped correctly to your docker container and the docker container is running. You can ensure the drive has been successfully mapped by using an SSH connection to the docker instance and running the following commands.
+ * `mongo` starts mongo CLI
+ * `show dbs` if you can't see vinces-videos in this list, the volume has not been correctly mapped.
+ * `use vinces-videos` set's the active database
+ * `show collections` lists the available 'tables' within the database
+ * `db.Products.find()` lists all items within the Products collection
+
+2. The C# dotnet API. You can run this locally on your machine.
+    * Ensure that Api/appsettings.json has the correct connection string to the mongo docker container as well as the correct database name. These are in source control so it should always be correct unless you have a different configuration of the docker container
+    * You can use `dotnet run` to start the API, once it's running you can use https://localhost:5001/swagger to view API documentation. This will of course require the database to be running to get data.
+
+3. The front-end. You can use different front ends from the project. The current available front-ends are as follows:
+    * React (https://github.com/Vinces-Videos/frontend-react). Can be debugged with `npm start`.
