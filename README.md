@@ -64,11 +64,11 @@ Github is responsible for deploying the docker image to the elastic container re
 ### Debugging Tips
 You need a few components to debug vinces videos locally. All will need to be running for it to work:
 1. The Mongo DB. This is running within a Docker container, ensure that the volume has been mapped correctly to your docker container and the docker container is running. You can ensure the drive has been successfully mapped by using an SSH connection to the docker instance and running the following commands.
- * `mongo` starts mongo CLI
- * `show dbs` if you can't see vinces-videos in this list, the volume has not been correctly mapped.
- * `use vinces-videos` set's the active database
- * `show collections` lists the available 'tables' within the database
- * `db.Products.find()` lists all items within the Products collection
+   * `mongo` starts mongo CLI
+   * `show dbs` if you can't see vinces-videos in this list, the volume has not been correctly mapped.
+   * `use vinces-videos` set's the active database
+   * `show collections` lists the available 'tables' within the database
+   * `db.Products.find()` lists all items within the Products collection
 
 2. The C# dotnet API. You can run this locally on your machine.
     * Ensure that Api/appsettings.json has the correct connection string to the mongo docker container as well as the correct database name. These are in source control so it should always be correct unless you have a different configuration of the docker container
