@@ -40,12 +40,6 @@ module "setup-iam" {
   iam-name = "ecs-agent-vinces-videos"
 }
 
-#Create an elastic container registry to store the deployment files that github will create
-resource "aws_ecr_repository" "create-ecr" {
-  name         = "vinces-videos-api-terraform"
-  force_delete = true
-}
-
 #Should we push a version of the image up to our repo
 
 resource "aws_ecs_cluster" "create-ecs-cluster" {
