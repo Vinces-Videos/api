@@ -57,9 +57,9 @@ resource "aws_ecs_task_definition" "load-task-definitions" {
 
 #Create launch configuration for the EC2 instances we will be using as a template
 resource "aws_launch_configuration" "create-launch-config" {
-  name_prefix          = "vinces-videos-terraform-"
-  image_id             = "ami-070d0f1b66ccfd0fa"
-  instance_type        = "t2.micro"
+  name_prefix          = var.name-prefix
+  image_id             = var.ec2-ami-id
+  instance_type        = var.ec2-instance-type
   key_name             = "vincesvideo-api-keypair"
   security_groups      = ["sg-08a208eb04992a77c"]
   iam_instance_profile = module.setup-iam.iam-instance-profile-arn
@@ -80,7 +80,7 @@ resource "aws_autoscaling_group" "create-asg" {
 }
 
 resource "aws_ecs_service" "create-ecs-service" {
-  name = "vinces-videos-service-terraform"
+  name                               = var.ecs-service-name
   #default is EC2 anyway
   launch_type                        = "EC2"
   cluster                            = aws_ecs_cluster.create-ecs-cluster.arn

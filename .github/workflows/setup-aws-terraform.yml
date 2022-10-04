@@ -2,6 +2,12 @@ name: 'Setup AWS with Terraform'
 
 on:
   workflow_dispatch:
+      inputs: 
+      environment: 
+        description: >
+          The environment in which to run, must have a corresponding .tfvars file for each environment.
+        type: string
+        required: true
 
 permissions:
   contents: read
@@ -9,7 +15,7 @@ permissions:
 env:
   SECRETS_PARAM: -var="aws_access_id=${{ secrets.AWS_ACCESS_KEY_ID_TERRAFORM }}" -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_TERRAFORM }}"
   BACKEND_CONFIG: -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID_TERRAFORM }}" -backend-config="secret_key=${{ secrets.AWS_ACCESS_KEY_TERRAFORM }}"
-
+aws_access_id
 jobs:
   terraform:
     name: 'Terraform'
@@ -52,4 +58,4 @@ jobs:
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false ${{ env.SECRETS_PARAM }}
+      run: terraform apply -auto-approve -input=false ${{ env.SECRETS_PARAM }} -var-file=${{inputs.environment}}-env.tfvars
