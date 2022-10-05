@@ -43,7 +43,7 @@ jobs:
 
     # Destroy existing environment to ensure clean slate
     - name: Terraform Destroy previous environment
-      run: terraform destroy -auto-approve -input=false ${{ env.SECRETS_PARAM }}
+      run: terraform destroy -auto-approve -input=false ${{ env.SECRETS_PARAM }} -var-file=${{inputs.environment}}-env.tfvars
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
