@@ -9,6 +9,7 @@ permissions:
 env:
   SECRETS_PARAM: -var="aws_access_id=${{ secrets.AWS_ACCESS_KEY_ID_TERRAFORM }}" -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_TERRAFORM }}"
   BACKEND_CONFIG: -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID_TERRAFORM }}" -backend-config="secret_key=${{ secrets.AWS_ACCESS_KEY_TERRAFORM }}"
+  TF_ENV_VARIABLES_FILE: test-env.tfvars
 
 jobs:
   terraform:
@@ -38,4 +39,4 @@ jobs:
 
     # Destroy existing environment to ensure clean slate
     - name: Terraform Destroy previous environment
-      run: terraform destroy -auto-approve -input=false ${{ env.SECRETS_PARAM }}
+      run: terraform destroy -auto-approve -input=false ${{ env.SECRETS_PARAM }} -var-file=${{env.TF_ENV_VARIABLES_FILE}}
