@@ -8,7 +8,7 @@ env:
   ECR_REPOSITORY: test-vinces-videos-terraform-ecr
   ECS_SERVICE: TEST-vinces-videos-service-terraform
   ECS_CLUSTER: TEST-vinces-videos-terraform-cluster
-  CONTAINER_NAME: test-vinces-videos-container-terraform
+  CONTAINER_NAME: vinces-videos-container-terraform
 
 permissions:
   contents: read
