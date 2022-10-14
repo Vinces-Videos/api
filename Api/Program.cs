@@ -11,11 +11,15 @@ var AllowSpecificOrigins = "_allowSpecificOrigins";
 // Add services to the container.
 
 builder.Services.AddCors(options => {
-    options.AddPolicy(name: AllowSpecificOrigins,
-    policy => 
-    {
-        policy.WithOrigins("http://localhost:3000", "http://192.168.1.234:3000");
-    });
+    options.AddPolicy(
+        name: AllowSpecificOrigins,
+        policy => 
+        {
+            policy.WithOrigins("http://localhost:3000", "http://192.168.1.234:3000")
+                .AllowAnyHeader() //Allows multiple content-types
+                .AllowAnyMethod(); //Allows PUT, POST etc 
+        }
+    );
 });
 
 builder.Services.AddControllers();
