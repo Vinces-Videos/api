@@ -14,7 +14,7 @@ public class MongoDatabaseCollection<T> : IDatabaseCollection<T> where T : Datab
 
     public void DeleteOne(string id)
     {
-        _mongoCollection.DeleteOne(id);
+        _mongoCollection.DeleteOne(filter: (rec => rec.Id == id));
     }
 
     public void InsertOne(T record)
